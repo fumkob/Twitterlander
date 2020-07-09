@@ -1,0 +1,13 @@
+excluded:
+ - Pods
+ - Carthage
+ - vendor/bundle
+ - fastlane
+ - MemoApp/SceneDelegate.swift
+ - MemoApp/AppDelegate.swift
+
+disabled_rules:
+ - trailing_whitespace
+ - colon
+ 
+line_length: 300
