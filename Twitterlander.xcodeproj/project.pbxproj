@@ -10,10 +10,15 @@
 		23024DD8268195337FE36A5D /* Pods_Twitterlander.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8C100B9729BB9F7E98C1BD58 /* Pods_Twitterlander.framework */; };
 		52A89AB2396F73CE596FC843 /* Pods_Twitterlander_TwitterlanderUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AFE5042328B7C76E61612A67 /* Pods_Twitterlander_TwitterlanderUITests.framework */; };
 		66E7DB4B59B8C2C7EE69F0EE /* Pods_TwitterlanderTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 630EF93FED5FDE6DFBBF4695 /* Pods_TwitterlanderTests.framework */; };
+		A55289AC24BBF73800B0671A /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A55289AB24BBF73800B0671A /* HomeViewController.swift */; };
+		A55289AE24BBF74E00B0671A /* Home.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A55289AD24BBF74E00B0671A /* Home.storyboard */; };
+		A56404DD24B81DC900B17C89 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A56404DC24B81DC900B17C89 /* LoginViewController.swift */; };
+		A56404E124B81E1400B17C89 /* Login.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A56404E024B81E1400B17C89 /* Login.storyboard */; };
+		A56404E524B8251E00B17C89 /* CustomButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = A56404E424B8251E00B17C89 /* CustomButton.swift */; };
+		A56404E724B83AEC00B17C89 /* OAuthClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = A56404E624B83AEC00B17C89 /* OAuthClient.swift */; };
+		A56404E924B83FF700B17C89 /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A56404E824B83FF700B17C89 /* LoginViewModel.swift */; };
 		A566AF0B24B7177400D2E7F6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A566AF0A24B7177400D2E7F6 /* AppDelegate.swift */; };
 		A566AF0D24B7177400D2E7F6 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A566AF0C24B7177400D2E7F6 /* SceneDelegate.swift */; };
-		A566AF0F24B7177400D2E7F6 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A566AF0E24B7177400D2E7F6 /* ViewController.swift */; };
-		A566AF1224B7177400D2E7F6 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A566AF1024B7177400D2E7F6 /* Main.storyboard */; };
 		A566AF1424B7177600D2E7F6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A566AF1324B7177600D2E7F6 /* Assets.xcassets */; };
 		A566AF1724B7177600D2E7F6 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A566AF1524B7177600D2E7F6 /* LaunchScreen.storyboard */; };
 		A566AF2224B7177600D2E7F6 /* TwitterlanderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A566AF2124B7177600D2E7F6 /* TwitterlanderTests.swift */; };
@@ -43,11 +48,16 @@
 		8C100B9729BB9F7E98C1BD58 /* Pods_Twitterlander.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Twitterlander.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8ED56B7DB452050CD17A8024 /* Pods-Twitterlander.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Twitterlander.release.xcconfig"; path = "Target Support Files/Pods-Twitterlander/Pods-Twitterlander.release.xcconfig"; sourceTree = "<group>"; };
 		9CD54809E6EA81DE0DD74892 /* Pods-Twitterlander-TwitterlanderUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Twitterlander-TwitterlanderUITests.debug.xcconfig"; path = "Target Support Files/Pods-Twitterlander-TwitterlanderUITests/Pods-Twitterlander-TwitterlanderUITests.debug.xcconfig"; sourceTree = "<group>"; };
+		A55289AB24BBF73800B0671A /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
+		A55289AD24BBF74E00B0671A /* Home.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Home.storyboard; sourceTree = "<group>"; };
+		A56404DC24B81DC900B17C89 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		A56404E024B81E1400B17C89 /* Login.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Login.storyboard; sourceTree = "<group>"; };
+		A56404E424B8251E00B17C89 /* CustomButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomButton.swift; sourceTree = "<group>"; };
+		A56404E624B83AEC00B17C89 /* OAuthClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OAuthClient.swift; sourceTree = "<group>"; };
+		A56404E824B83FF700B17C89 /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
 		A566AF0724B7177400D2E7F6 /* Twitterlander.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Twitterlander.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A566AF0A24B7177400D2E7F6 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		A566AF0C24B7177400D2E7F6 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		A566AF0E24B7177400D2E7F6 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		A566AF1124B7177400D2E7F6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		A566AF1324B7177600D2E7F6 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		A566AF1624B7177600D2E7F6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		A566AF1824B7177600D2E7F6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -91,6 +101,34 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		A56404D924B81D3900B17C89 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				A56404E424B8251E00B17C89 /* CustomButton.swift */,
+				A56404DC24B81DC900B17C89 /* LoginViewController.swift */,
+				A55289AB24BBF73800B0671A /* HomeViewController.swift */,
+				A56404E024B81E1400B17C89 /* Login.storyboard */,
+				A55289AD24BBF74E00B0671A /* Home.storyboard */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		A56404DA24B81D4D00B17C89 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				A56404E824B83FF700B17C89 /* LoginViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		A56404DB24B81D6400B17C89 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				A56404E624B83AEC00B17C89 /* OAuthClient.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
 		A566AEFE24B7177400D2E7F6 = {
 			isa = PBXGroup;
 			children = (
@@ -116,10 +154,11 @@
 		A566AF0924B7177400D2E7F6 /* Twitterlander */ = {
 			isa = PBXGroup;
 			children = (
+				A56404D924B81D3900B17C89 /* View */,
+				A56404DA24B81D4D00B17C89 /* ViewModel */,
+				A56404DB24B81D6400B17C89 /* Model */,
 				A566AF0A24B7177400D2E7F6 /* AppDelegate.swift */,
 				A566AF0C24B7177400D2E7F6 /* SceneDelegate.swift */,
-				A566AF0E24B7177400D2E7F6 /* ViewController.swift */,
-				A566AF1024B7177400D2E7F6 /* Main.storyboard */,
 				A566AF1324B7177600D2E7F6 /* Assets.xcassets */,
 				A566AF1524B7177600D2E7F6 /* LaunchScreen.storyboard */,
 				A566AF1824B7177600D2E7F6 /* Info.plist */,
@@ -281,7 +320,8 @@
 			files = (
 				A566AF1724B7177600D2E7F6 /* LaunchScreen.storyboard in Resources */,
 				A566AF1424B7177600D2E7F6 /* Assets.xcassets in Resources */,
-				A566AF1224B7177400D2E7F6 /* Main.storyboard in Resources */,
+				A56404E124B81E1400B17C89 /* Login.storyboard in Resources */,
+				A55289AE24BBF74E00B0671A /* Home.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -443,9 +483,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A566AF0F24B7177400D2E7F6 /* ViewController.swift in Sources */,
+				A56404E524B8251E00B17C89 /* CustomButton.swift in Sources */,
+				A56404DD24B81DC900B17C89 /* LoginViewController.swift in Sources */,
+				A55289AC24BBF73800B0671A /* HomeViewController.swift in Sources */,
+				A56404E924B83FF700B17C89 /* LoginViewModel.swift in Sources */,
 				A566AF0B24B7177400D2E7F6 /* AppDelegate.swift in Sources */,
 				A566AF0D24B7177400D2E7F6 /* SceneDelegate.swift in Sources */,
+				A56404E724B83AEC00B17C89 /* OAuthClient.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -481,14 +525,6 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		A566AF1024B7177400D2E7F6 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				A566AF1124B7177400D2E7F6 /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		A566AF1524B7177600D2E7F6 /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
