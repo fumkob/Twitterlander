@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
-    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <device id="retina4_0" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
@@ -10,17 +10,54 @@
         <!--Home View Controller-->
         <scene sceneID="Z3A-gb-Apk">
             <objects>
-                <viewController storyboardIdentifier="home" modalPresentationStyle="fullScreen" id="5QE-6N-d3Y" customClass="HomeViewController" customModule="Twitterlander" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="home" modalTransitionStyle="crossDissolve" modalPresentationStyle="fullScreen" id="5QE-6N-d3Y" customClass="HomeViewController" customModule="Twitterlander" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="aMA-1N-dql">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="g75-bW-wFG">
+                                <rect key="frame" x="0.0" y="44" width="320" height="524"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                            </tableView>
+                        </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="g75-bW-wFG" firstAttribute="top" secondItem="fdz-SD-ZF4" secondAttribute="top" id="1Oj-5i-dxN"/>
+                            <constraint firstItem="fdz-SD-ZF4" firstAttribute="bottom" secondItem="g75-bW-wFG" secondAttribute="bottom" id="Nw5-gU-qcz"/>
+                            <constraint firstItem="g75-bW-wFG" firstAttribute="leading" secondItem="fdz-SD-ZF4" secondAttribute="leading" id="RIP-UQ-U5C"/>
+                            <constraint firstItem="fdz-SD-ZF4" firstAttribute="trailing" secondItem="g75-bW-wFG" secondAttribute="trailing" id="fJD-ir-z3C"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="fdz-SD-ZF4"/>
                     </view>
+                    <navigationItem key="navigationItem" id="usM-uo-hPx"/>
+                    <connections>
+                        <outlet property="tableView" destination="g75-bW-wFG" id="u7B-wz-I6L"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="bqQ-sA-6gm" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="70" y="70"/>
+            <point key="canvasLocation" x="930" y="69.718309859154928"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="J7z-ml-ANC">
+            <objects>
+                <navigationController storyboardIdentifier="navigation" automaticallyAdjustsScrollViewInsets="NO" modalTransitionStyle="crossDissolve" modalPresentationStyle="fullScreen" id="mEJ-9I-VXb" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="cLa-dY-U6F">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <toolbar key="toolbar" opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="V2F-Fk-dip">
+                        <autoresizingMask key="autoresizingMask"/>
+                    </toolbar>
+                    <connections>
+                        <segue destination="5QE-6N-d3Y" kind="relationship" relationship="rootViewController" id="4ZJ-wR-ll7"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Tjs-xj-Qu1" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="69.375" y="69.718309859154928"/>
         </scene>
     </scenes>
 </document>

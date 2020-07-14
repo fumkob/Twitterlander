@@ -6,22 +6,20 @@
 //  Copyright © 2020 Fumiaki Kobayashi. All rights reserved.
 //
 
-import Foundation
 import RxSwift
-import RxCocoa
 import OAuthSwift
 
 open class OAuthClient {
-    enum OAuthClientError: Error {
+    public enum OAuthClientError: Error {
         case getOAuth
     }
     private var oauthswift: OAuthSwift?
-    private var token: [String : String] = [
+    private var token: [String:String] = [
         "oauthToken" : "",
         "oauthTokenSecret" : ""
     ]
     
-    open func getOAuthToken() -> Single<[String : String]> {
+    open func getOAuthToken() -> Single<[String:String]> {
         return .create {observer in
             let oauthswift = OAuth1Swift(
                 consumerKey:    "aiSbp28ZF965SD1bQwDP4YHG2",
