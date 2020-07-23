@@ -1,6 +1,6 @@
 //
-//  TwitterlanderTests.swift
-//  TwitterlanderTests
+//  LoginViewModelTests.swift
+//  LoginViewModelTests
 //
 //  Created by Fumiaki Kobayashi on 2020/07/09.
 //  Copyright © 2020 Fumiaki Kobayashi. All rights reserved.
@@ -10,7 +10,7 @@ import XCTest
 import RxSwift
 @testable import Twitterlander
 
-class TwitterlanderTests: XCTestCase {
+class LoginViewModelTests: XCTestCase {
     
     private var disposeBag = DisposeBag()
 
@@ -24,45 +24,45 @@ class TwitterlanderTests: XCTestCase {
 
     let userDefaults = UserDefaults.standard
     func testCheckAccessTokenExists() {
-        let oAuthClient: OAuthClient = LoginClientMockFactory.emptyOAuthClient()
-        let loginViewModel = LoginViewModel(client: oAuthClient)
+        let oauthClient: OAuthClient = OAuthClientMockFactory.emptyOAuthClient()
+        let loginViewModel = LoginViewModel(client: oauthClient)
         let transitionToHome = loginViewModel.transitionToHome
         
         loginViewModel.checkOAuthTokenExsits()
         transitionToHome
             .drive(onNext: {
-                let tokenExists = (self.userDefaults.dictionary(forKey: "token") as? [String : String]) != nil
-                switch $0 {
-                case true:
-                    XCTAssertTrue(tokenExists, "Token does not exists even though transitionToHome is true")
-                case false:
-                    XCTAssertFalse(tokenExists, "Token exists even though transitionToHome is false")
+                if let token:[String:String] = self.userDefaults.dictionary(forKey: "token") as? [String : String] {
+                    if !token.isEmpty {
+                        XCTAssertTrue($0, "Token exists even though transitionToHome is false")
+                    } else {
+                        XCTAssertFalse($0, "Token does not exists even though transitionToHome is true")
+                    }
+                } else {
+                    XCTAssertFalse($0, "Token does not exists even though transitionToHome is true")
                 }
             })
             .disposed(by: disposeBag)
     }
     
     func testLoginProcessing() {
-        let oAuthClient: OAuthClient = LoginClientMockFactory.emptyOAuthClient()
+        let oAuthClient: OAuthClient = OAuthClientMockFactory.emptyOAuthClient()
         let loginViewModel = LoginViewModel(client: oAuthClient)
         let transitionToHome = loginViewModel.transitionToHome
         
         loginViewModel.loginProcessing()
         transitionToHome
         .drive(onNext: {
-            let tokenExists = (self.userDefaults.dictionary(forKey: "token") as? [String : String]) != nil
-            switch $0 {
-            case true:
-                XCTAssertTrue(tokenExists, "Token does not exists even though transitionToHome is true")
-            case false:
-                XCTAssertFalse(tokenExists, "Token exists even though transitionToHome is false")
+            if self.userDefaults.dictionary(forKey: "token") as? [String : String] != nil {
+                XCTAssertTrue($0, "Token exists even though transitionToHome is false")
+            } else {
+                XCTAssertFalse($0, "Token does not exists even though transitionToHome is true")
             }
         })
         .disposed(by: disposeBag)
     }
 }
 
-class LoginClientMockFactory {
+class OAuthClientMockFactory {
     class OAuthClientMock: OAuthClient {
         override func getOAuthToken() -> Single<[String : String]> {
             return .create(subscribe : {observer in

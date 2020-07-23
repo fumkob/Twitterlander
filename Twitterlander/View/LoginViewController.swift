@@ -45,10 +45,10 @@ class LoginViewController: UIViewController {
             .drive(onNext: {[weak self] in
                 if $0 {
                     let homeStoryboard = UIStoryboard(name: "Home", bundle: nil)
-                    guard let homeViewController = homeStoryboard.instantiateViewController(withIdentifier: "home") as? HomeViewController else {
+                    guard let navigationController = homeStoryboard.instantiateViewController(withIdentifier: "navigation") as? UINavigationController else {
                         fatalError("Storyboard named \"Home\" does NOT exists.")
                     }
-                    self?.present(homeViewController, animated: true, completion: nil)
+                    self?.present(navigationController, animated: true, completion: nil)
                 }
             })
             .disposed(by: disposeBag)
