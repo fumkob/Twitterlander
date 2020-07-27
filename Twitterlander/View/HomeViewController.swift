@@ -22,20 +22,19 @@ class HomeViewController: UIViewController {
         tableSetup()
         navigationBarSetup()
         tableViewCellTapped()
+        transitionToTweetDetail()
     }
+    
     private func homeViewSetup() {
         self.homeViewModel = HomeViewModel(client: HomeTimelineClient())
     }
     
     private func tableSetup() {
         tableView.register(UINib(nibName: "DefaultTweetCell", bundle: nil), forCellReuseIdentifier: "defaultCell")
-        //高さ調整
-        tableView.estimatedRowHeight = 100
-        tableView.rowHeight = UITableView.automaticDimension
         
         //セルにデータセット
         homeViewModel.requestHomeTimeline()
-        let homeTimelineArray = self.homeViewModel.homeTimelineArray
+        let homeTimelineArray = homeViewModel.homeTimelineArray
         homeTimelineArray
             .drive(tableView.rx.items) {[weak self] tableView, _, data in
                 guard let cell = tableView.dequeueReusableCell(withIdentifier: "defaultCell") as? DefaultTweetCell else {
@@ -61,8 +60,8 @@ class HomeViewController: UIViewController {
     private func tableViewCellTapped() {
         Observable
             .zip(tableView.rx.itemSelected, tableView.rx.modelSelected(HomeTimeline.self))
-            .subscribe(onNext: { [weak self] indexPath, tweetData in
-                self?.transitionToTweetDetail()
+            .subscribe(onNext: { [weak self] indexPath, data in
+                self?.homeViewModel.transitionProcessToTweetDetail(homeTimeline: data)
                 //選択解除
                 self?.tableView.deselectRow(at: indexPath, animated: true)
             })
@@ -81,11 +80,17 @@ class HomeViewController: UIViewController {
     }
     //ツイート詳細遷移
     private func transitionToTweetDetail() {
-        let tweetDetailStoryboard = UIStoryboard(name: "TweetDetail", bundle: nil)
-        guard let tweetDetailViewController = tweetDetailStoryboard.instantiateViewController(withIdentifier: "tweetDetail") as? TweetDetailViewController else {
-            fatalError("Storyboard named \"TweetDetail\" does NOT exists.")
-        }
-        navigationController?.pushViewController(tweetDetailViewController, animated: true)
+        homeViewModel.tweetDetailData
+            .drive(onNext: {[weak self] tweetDetailData in
+                let tweetDetailStoryboard = UIStoryboard(name: "TweetDetail", bundle: nil)
+                guard let tweetDetailViewController = tweetDetailStoryboard.instantiateViewController(withIdentifier: "tweetDetail") as? TweetDetailViewController else {
+                    fatalError("Storyboard named \"TweetDetail\" does NOT exists.")
+                }
+                tweetDetailViewController.tweetDetailData = tweetDetailData
+                self?.navigationController?.pushViewController(tweetDetailViewController, animated: true)
+
+            })
+            .disposed(by: disposeBag)
     }
     //プロフィール画面遷移
     private func transitionToProfile() {

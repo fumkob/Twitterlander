@@ -11,7 +11,7 @@ disabled_rules:
 line_length: 300
 cyclomatic_complexity:
   warning: 10
-  error: 40
+  error: 50
 function_body_length:
   warning: 100
   error: 500

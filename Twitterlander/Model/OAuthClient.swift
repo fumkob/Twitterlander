@@ -10,9 +10,6 @@ import RxSwift
 import OAuthSwift
 
 open class OAuthClient {
-    public enum OAuthClientError: Error {
-        case getOAuth
-    }
     private var oauthswift: OAuthSwift?
     private var token: [String:String] = [
         "oauthToken" : "",
@@ -37,7 +34,7 @@ open class OAuthClient {
                     self.token["oauthTokenSecret"] = credential.oauthTokenSecret
                     observer(.success(self.token))
                 case .failure:
-                    observer(.error(OAuthClientError.getOAuth))
+                    observer(.error(APIError.getOAuthError))
                 }
             }
             return Disposables.create()

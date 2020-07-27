@@ -18,9 +18,15 @@ extension Date {
             return dateFormatter
         }()
         
-        static let twitterStyle: DateFormatter = {
+        static let twitterDateStyle: DateFormatter = {
             let formatter = DateFormatter()
             formatter.dateFormat = "YYYY/MM/dd"
+            return formatter
+        }()
+        
+        static let twitterTimeStyle: DateFormatter = {
+            let formatter = DateFormatter()
+            formatter.dateFormat = "HH:mm"
             return formatter
         }()
     }
@@ -31,7 +37,10 @@ extension Date {
         self = date
     }
     
-    func twitterStyleDate() -> String {
-        return Const.twitterStyle.string(from: self)
+    func twitterDateStyle() -> String {
+        return Const.twitterDateStyle.string(from: self)
+    }
+    func twitterTimeStyle() -> String {
+        return Const.twitterTimeStyle.string(from: self)
     }
 }

@@ -53,7 +53,7 @@ class TimeCalculationTests: XCTestCase {
         let delayTime:Double = -13456120
         let delayedCreatedAt = createdAt.addingTimeInterval(delayTime)
         let result = timeCalculation.dateToString(createdAt: delayedCreatedAt)
-        let expectedResult = "・" + delayedCreatedAt.twitterStyleDate()
+        let expectedResult = "・" + delayedCreatedAt.twitterDateStyle()
         XCTAssertEqual(result, expectedResult, "Calculation within 60sec is incorrect")
     }
 }

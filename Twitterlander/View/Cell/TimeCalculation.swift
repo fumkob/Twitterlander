@@ -20,7 +20,7 @@ open class TimeCalculation {
         } else if differenceOfTime < 60*60*24*7 {
             return "・\(Int(differenceOfTime/60/60/24))日"
         } else {
-            return "・\(createdAt.twitterStyleDate())"
+            return "・\(createdAt.twitterDateStyle())"
         }
     }
 }
