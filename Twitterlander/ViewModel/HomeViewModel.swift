@@ -11,9 +11,12 @@ import RxCocoa
 
 open class HomeViewModel {
     private let homeTimelineClient: HomeTimelineClient
-    //データ用
+    //APIデータ用
     private let homeTimelineArrayEvent = PublishSubject<[HomeTimeline]>()
-    open var homeTimelineArray: Driver<[HomeTimeline]> {return homeTimelineArrayEvent.asDriver(onErrorJustReturn: [])}
+    open var homeTimelineArray: Driver<[HomeTimeline]> {return homeTimelineArrayEvent.asDriver(onErrorDriveWith: .empty())}
+    //詳細ツイート遷移データ用
+    private let tweetDetailDataEvent = PublishSubject<TweetDetailData>()
+    open var tweetDetailData: Driver<TweetDetailData> {return tweetDetailDataEvent.asDriver(onErrorDriveWith: .empty())}
     
     private var disposeBag = DisposeBag()
     private let userDefaults = UserDefaults.standard
@@ -38,8 +41,13 @@ open class HomeViewModel {
             })
             .disposed(by: disposeBag)
     }
-    //プロフィール画面遷移
-    open func profileImageToProfile() {
-        
+    //詳細ツイート画面遷移
+    open func transitionProcessToTweetDetail(homeTimeline: HomeTimeline) {
+        switch homeTimeline.retweetedStatus {
+        case true:
+            tweetDetailDataEvent.onNext(TweetDetailData(retweet: homeTimeline))
+        case false:
+            tweetDetailDataEvent.onNext(TweetDetailData(normalTweet: homeTimeline))
+        }
     }
 }

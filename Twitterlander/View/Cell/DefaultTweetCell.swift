@@ -15,6 +15,8 @@ class DefaultTweetCell: UITableViewCell {
     @IBOutlet weak var screenNameLabel: UILabel!
     @IBOutlet weak var tweetTextLabel: UILabel!
     @IBOutlet weak var timeLabel: UILabel!
+    @IBOutlet weak var replyStackView: UIStackView!
+    @IBOutlet weak var replyScreenNameButton: UIButton!
     @IBOutlet weak var profileImage: CircleImageView!
     @IBOutlet weak var replyCountLabel: UILabel!
     @IBOutlet weak var retweetCountLabel: UILabel!
@@ -74,9 +76,9 @@ class DefaultTweetCell: UITableViewCell {
     
     public func defaultTweetSetup(data: HomeTimeline) {
         nameLabel.text = data.name
-        screenNameLabel.text = "@" + "\(data.screenName)"
-        tweetTextLabel.text = data.text
+        screenNameLabel.text = "@" + data.screenName
         timeLabel.text = timeCalculation.dateToString(createdAt: data.createdAt)
+        tweetTextLabel.text = data.text
         replyCountLabel.text = "" //Home_Timeline上には流れてこないため別途集計が必要
         if data.retweetCount == 0 {
             retweetCountLabel.text = ""
@@ -109,6 +111,15 @@ class DefaultTweetCell: UITableViewCell {
         media4.isHidden = true
         retweetLabel.isHidden = true
         retweetSymbol.isHidden = true
+        switch data.isReply {
+        case true:
+            replyStackView.isHidden = false
+            if let inReplyToScreenName = data.inReplyToScreenName {
+                replyScreenNameButton.setTitle("@\(inReplyToScreenName)さん", for: .normal)
+            }
+        case false:
+            replyStackView.isHidden = true
+        }
         
         //レイアウト制約一旦全解除
         constraintReset()
@@ -142,6 +153,7 @@ class DefaultTweetCell: UITableViewCell {
         guard let retweetedScreenName = data.retweetedScreenName else { fatalError("retweetedScreenName is nil")}
         screenNameLabel.text = "@" + retweetedScreenName
         tweetTextLabel.text = data.retweetedText
+        tweetTextLabel.sizeToFit()
         guard let retweetedCreatedAt = data.retweetedCreatedAt else { fatalError("retweetedCreatedAt is nil")}
         timeLabel.text = timeCalculation.dateToString(createdAt: retweetedCreatedAt)
         replyCountLabel.text = "" //Home_Timeline上には流れてこないため別途集計が必要
@@ -185,6 +197,15 @@ class DefaultTweetCell: UITableViewCell {
         media4.isHidden = true
         retweetLabel.isHidden = false
         retweetSymbol.isHidden = false
+        switch data.retweetedIsReply {
+        case true:
+            replyStackView.isHidden = false
+            if let retweetedInReplyToScreenName = data.retweetedInReplyToScreenName {
+                replyScreenNameButton.setTitle("@\(retweetedInReplyToScreenName)さん", for: .normal)
+            }
+        case false:
+            replyStackView.isHidden = true
+        }
         
         //レイアウト制約一旦全解除
         constraintReset()
@@ -209,6 +230,76 @@ class DefaultTweetCell: UITableViewCell {
                 fatalError("Unexpected error in count of mediaUrl")
             }
         } else {
+            NSLayoutConstraint.activate([tweetTextBottomToViewStackTop])
+        }
+    }
+    public func replySetup(data: SearchResult) {
+        nameLabel.text = data.name
+        screenNameLabel.text = "@" + data.screenName
+        timeLabel.text = timeCalculation.dateToString(createdAt: data.createdAt)
+        if let inReplyToScreenName = data.inReplyToScreenName {
+            tweetTextLabel.text = data.text.replacingOccurrences(of: "@" + inReplyToScreenName + " ", with: "")
+            replyScreenNameButton.setTitle("@\(inReplyToScreenName)さん", for: .normal)
+        } else {
+            tweetTextLabel.text = data.text
+        }
+        replyCountLabel.text = "" //Home_Timeline上には流れてこないため別途集計が必要
+        if data.retweetCount == 0 {
+            retweetCountLabel.text = ""
+        } else {
+            retweetCountLabel.text = "\(data.retweetCount)"
+        }
+        if data.favoriteCount == 0 {
+            favoriteCountLabel.text = ""
+        } else {
+            favoriteCountLabel.text = "\(data.favoriteCount)"
+        }
+        let url = URL(string: data.profileImageUrl.replacingOccurrences(of: "_normal", with: ""))
+        profileImage.kf.indicatorType = .activity
+        self.profileImage.kf.setImage(with: url)
+        
+        switch data.verified {
+        case true:
+            NSLayoutConstraint.deactivate([constraintWithoutVerification])
+            NSLayoutConstraint.activate([constraintWithVerification])
+            verifiedImage.isHidden = false
+        case false:
+            NSLayoutConstraint.deactivate([constraintWithVerification])
+            NSLayoutConstraint.activate([constraintWithoutVerification])
+            verifiedImage.isHidden = true
+        }
+        
+        media1.isHidden = true
+        media2.isHidden = true
+        media3.isHidden = true
+        media4.isHidden = true
+        retweetLabel.isHidden = true
+        retweetSymbol.isHidden = true
+        replyStackView.isHidden = false
+        
+        //レイアウト制約一旦全解除
+        constraintReset()
+        NSLayoutConstraint.activate([nameLabelToTop])
+
+        if let mediaUrl = data.mediaUrl {
+            switch mediaUrl.count {
+            case 1:
+                constraintWith1Picture(mediaUrl: mediaUrl)
+                
+            case 2:
+                constraintWith2Pictures(mediaUrl: mediaUrl)
+                
+            case 3:
+                constraintWith3Pictures(mediaUrl: mediaUrl)
+                
+            case 4:
+                constraintWith4Pictures(mediaUrl: mediaUrl)
+                                
+            default :
+                fatalError("Unexpected error in count of mediaUrl")
+            }
+        } else {
+            
             NSLayoutConstraint.activate([tweetTextBottomToViewStackTop])
         }
     }

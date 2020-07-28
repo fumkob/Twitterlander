@@ -8,16 +8,17 @@
 
 import SwiftyJSON
 
+public enum MediaType {
+    case photo
+    case movie
+}
+
 public struct HomeTimeline {
-    public enum MediaType {
-        case photo
-        case movie
-    }
-    
     public let name: String //ツイートした人の名前
     public let screenName: String //ID　＠〜
     public let profileImageUrl: String  //プロフ画像URL
     public let text: String //ツイート文
+    public let idStr: String //ツイートID
     public let createdAt: Date //ツイート日時
     public let mediaUrl: [String]? //投稿した写真URL
     public let mediaType: [MediaType]? //写真か動画か選択
@@ -26,15 +27,20 @@ public struct HomeTimeline {
     public let retweetedScreenName: String? //リツイートされた人のID
     public let retweetedProfileImageUrl: String? //リツイートされた人のプロフ画像URL
     public let retweetedText: String? //リツイートされた本文
+    public let retweetedIdStr: String? //リツイートされたツイートID
     public let retweetedCreatedAt: Date? //リツイートされたツイート日時
     public let retweetedMediaUrl: [String]? //投稿した写真URL
     public let retweetedMediaType: [MediaType]? //写真か動画か選択
     public let retweetedFavoriteCount: Int? //ファボ数
+    public let retweetedSource: String? //ツイートしたアプリ名
+    public let retweetedIsReply: Bool //リプライ判断
+    public let retweetedInReplyToScreenName: String? //リプライ先の名前
     public let quotedStatus: Bool //引用リツイートかの判定
     public let quotedName: String? //引用された人の名前
     public let quotedScreenName: String? //引用された人のID
     public let quotedProfileImageUrl: String? //引用された人のプロフ画像URL
     public let quotedText: String? //引用リツイート文
+    public let quotedIdStr: String? //引用リツイートID
     public let quotedCreatedAt: Date? //引用リツイート日時
     public let quotedMediaUrl: [String]? //投稿した写真URL
     public let quotedMediaType: [MediaType]? //写真か動画か選択
@@ -45,6 +51,7 @@ public struct HomeTimeline {
     public let verified: Bool //認証済み有無
     public let source: String //ツイートしたアプリ名
     public let isReply: Bool //リプライ判断（リプライの場合の実装は別途検討）
+    public let inReplyToScreenName: String? //リプライ先の名前
 
     //Cyclomatic Complexityでエラーが発生するため代替案の検討が必要
     init(homeData: JSON) {
@@ -61,6 +68,9 @@ public struct HomeTimeline {
         guard let text = homeData["text"].string else {
             fatalError("text missing")
         }
+        guard let idStr = homeData["id_str"].string else {
+            fatalError("id_str missing")
+        }
         guard let createdAt = homeData["created_at"].string else {
             fatalError("created_at missing")
         }
@@ -71,6 +81,7 @@ public struct HomeTimeline {
         self.screenName = screenName
         self.profileImageUrl = profileImageUrl
         self.text = text
+        self.idStr = idStr
         self.createdAt = createdAtFormatted
         
         if !homeData["extended_entities"]["media"].isEmpty {
@@ -119,12 +130,34 @@ public struct HomeTimeline {
         } else {
             self.retweetedText = nil
         }
+        if let retweetedIdStr = homeData["retweeted_status"]["id_str"].string {
+            self.retweetedIdStr = retweetedIdStr
+        } else {
+            self.retweetedIdStr = nil
+        }
         if let retweetedCreatedAt = homeData["retweeted_status"]["created_at"].string {
             let retweetedCreatedAtFormatted = Date(fromISO8601: retweetedCreatedAt)
             self.retweetedCreatedAt = retweetedCreatedAtFormatted
         } else {
             self.retweetedCreatedAt = nil
         }
+        if let retweetedSource = homeData["retweeted_status"]["source"].string {
+            if let firstIndex = retweetedSource.firstIndex(of: ">") {
+                let index1 = retweetedSource.index(after: firstIndex)
+                let subString = retweetedSource.suffix(from: index1)
+                let index2 = subString.firstIndex(of: "<")
+                if let index2 = index2 {
+                    self.retweetedSource = String(retweetedSource[index1..<index2])
+                } else {
+                    self.retweetedSource = retweetedSource
+                }
+            } else {
+                self.retweetedSource = retweetedSource
+            }
+        } else {
+            self.retweetedSource = nil
+        }
+        
         if !homeData["retweeted_status"]["extended_entities"]["media"].isEmpty {
             let retweetedMedia = homeData["retweeted_status"]["extended_entities"]["media"]
             let retweetedMediaUrl = retweetedMedia.compactMap { $0.1["media_url_https"].string }
@@ -148,6 +181,13 @@ public struct HomeTimeline {
             self.retweetedFavoriteCount = retweetedFavoriteCount
         } else {
             self.retweetedFavoriteCount = nil
+        }
+        if let retweetedInReplyToScreenName = homeData["retweeted_status"]["in_reply_to_screen_name"].string {
+            self.retweetedIsReply = true
+            self.retweetedInReplyToScreenName = retweetedInReplyToScreenName
+        } else {
+            self.retweetedIsReply = false
+            self.retweetedInReplyToScreenName = nil
         }
         
         //引用ツイート情報
@@ -175,6 +215,11 @@ public struct HomeTimeline {
             self.quotedText = quotedText
         } else {
             self.quotedText = nil
+        }
+        if let quotedIdStr = homeData["quoted_status"]["id_str"].string {
+            self.quotedIdStr = quotedIdStr
+        } else {
+            self.quotedIdStr = nil
         }
         if let quotedCreatedAt = homeData["quoted_status"]["created_at"].string {
             let quotedCreatedAtFormatted = Date(fromISO8601: quotedCreatedAt)
@@ -221,17 +266,32 @@ public struct HomeTimeline {
         guard let source = homeData["source"].string else {
             fatalError("source is missing")
         }
+        
         self.retweetCount = retweetCount
         self.favoriteCount = favoriteCount
         self.isRetweeted = isRetweeted
         self.isFavorited = isFavorited
         self.verified = verified
-        self.source = source
         
-        if homeData["in_reply_to_status_id_str"].string != nil {
+        if let firstIndex = source.firstIndex(of: ">") {
+            let index1 = source.index(after: firstIndex)
+            let subString = source.suffix(from: index1)
+            let index2 = subString.firstIndex(of: "<")
+            if let index2 = index2 {
+                self.source = String(source[index1..<index2])
+            } else {
+                self.source = source
+            }
+        } else {
+            self.source = source
+        }
+        
+        if let inReplyToScreenName = homeData["in_reply_to_screen_name"].string {
             self.isReply = true
+            self.inReplyToScreenName = inReplyToScreenName
         } else {
             self.isReply = false
+            self.inReplyToScreenName = nil
         }
     }
 }

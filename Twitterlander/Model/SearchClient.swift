@@ -1,8 +1,8 @@
 //
-//  HomeTimelineClient.swift
+//  SearchClient.swift
 //  Twitterlander
 //
-//  Created by Fumiaki Kobayashi on 2020/07/13.
+//  Created by Fumiaki Kobayashi on 2020/07/27.
 //  Copyright © 2020 Fumiaki Kobayashi. All rights reserved.
 //
 
@@ -10,10 +10,9 @@ import OAuthSwift
 import SwiftyJSON
 import RxSwift
 
-public class HomeTimelineClient {
+public class SearchClient {
     private var oauthswift: OAuthSwift?
-    
-    public func getHomeTimeline(url: String, token: [String:String]) -> Single<[HomeTimeline]> {
+    public func getSearchResult(url: String, token: [String:String]) -> Single<[SearchResult]> {
         return .create {observer in
             let oauthswift = OAuth1Swift(
                 consumerKey:    "aiSbp28ZF965SD1bQwDP4YHG2",
@@ -30,18 +29,18 @@ public class HomeTimelineClient {
             oauthswift.client.get(url) {result in
                 switch result {
                 case .success(let response):
-                    let jsonData = try? response.jsonObject()
-                    guard let homeData = jsonData else {
-                        fatalError("response in HomeTimeline could not be converted to JSON")
+                    let wrappedData = try? response.jsonObject()
+                    guard let unwrappedData = wrappedData else {
+                        fatalError("wrappedData is nil")
                     }
-                    observer(.success(JSON(homeData).map { HomeTimeline(homeData: $0.1) }))
+                    let jsonData = JSON(unwrappedData)
+                    observer(.success(jsonData["statuses"].map { SearchResult(searchData: $0.1) }))
                 case .failure:
-                    observer(.error(APIError.getHomeTimelineError))
+                    observer(.error(APIError.getSearchResultError))
                 }
             }
             
             return Disposables.create()
         }
     }
-
 }
