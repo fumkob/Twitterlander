@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
-    <device id="retina4_0" orientation="portrait" appearance="light"/>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097.2" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
@@ -12,25 +12,35 @@
             <objects>
                 <viewController storyboardIdentifier="home" modalTransitionStyle="crossDissolve" modalPresentationStyle="fullScreen" id="5QE-6N-d3Y" customClass="HomeViewController" customModule="Twitterlander" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="aMA-1N-dql">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="g75-bW-wFG">
-                                <rect key="frame" x="0.0" y="44" width="320" height="524"/>
+                                <rect key="frame" x="0.0" y="88" width="414" height="808"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                             </tableView>
+                            <imageView clipsSubviews="YES" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="PlusButton" translatesAutoresizingMaskIntoConstraints="NO" id="uxG-Lc-d9z">
+                                <rect key="frame" x="344" y="792" width="45" height="45"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="45" id="gr5-yT-hHS"/>
+                                    <constraint firstAttribute="height" constant="45" id="lUn-J8-S56"/>
+                                </constraints>
+                            </imageView>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
                             <constraint firstItem="g75-bW-wFG" firstAttribute="top" secondItem="fdz-SD-ZF4" secondAttribute="top" id="1Oj-5i-dxN"/>
-                            <constraint firstItem="fdz-SD-ZF4" firstAttribute="bottom" secondItem="g75-bW-wFG" secondAttribute="bottom" id="Nw5-gU-qcz"/>
+                            <constraint firstItem="fdz-SD-ZF4" firstAttribute="trailing" secondItem="uxG-Lc-d9z" secondAttribute="trailing" constant="25" id="LbO-mT-zxv"/>
+                            <constraint firstAttribute="bottom" secondItem="g75-bW-wFG" secondAttribute="bottom" id="Nw5-gU-qcz"/>
                             <constraint firstItem="g75-bW-wFG" firstAttribute="leading" secondItem="fdz-SD-ZF4" secondAttribute="leading" id="RIP-UQ-U5C"/>
                             <constraint firstItem="fdz-SD-ZF4" firstAttribute="trailing" secondItem="g75-bW-wFG" secondAttribute="trailing" id="fJD-ir-z3C"/>
+                            <constraint firstItem="fdz-SD-ZF4" firstAttribute="bottom" secondItem="uxG-Lc-d9z" secondAttribute="bottom" constant="25" id="wDO-GA-tvJ"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="fdz-SD-ZF4"/>
                     </view>
                     <navigationItem key="navigationItem" id="usM-uo-hPx"/>
                     <connections>
+                        <outlet property="plusButtonImage" destination="uxG-Lc-d9z" id="tj7-Bb-Iqa"/>
                         <outlet property="tableView" destination="g75-bW-wFG" id="u7B-wz-I6L"/>
                     </connections>
                 </viewController>
@@ -44,7 +54,7 @@
                 <navigationController storyboardIdentifier="navigation" automaticallyAdjustsScrollViewInsets="NO" modalTransitionStyle="crossDissolve" modalPresentationStyle="fullScreen" id="mEJ-9I-VXb" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="cLa-dY-U6F">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
@@ -60,4 +70,7 @@
             <point key="canvasLocation" x="69.375" y="69.718309859154928"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="PlusButton" width="500" height="500"/>
+    </resources>
 </document>

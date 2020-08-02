@@ -1,5 +1,5 @@
 //
-//  HomeTimelineClient.swift
+//  TimelineClient.swift
 //  Twitterlander
 //
 //  Created by Fumiaki Kobayashi on 2020/07/13.
@@ -10,10 +10,10 @@ import OAuthSwift
 import SwiftyJSON
 import RxSwift
 
-public class HomeTimelineClient {
+public class TimelineClient {
     private var oauthswift: OAuthSwift?
     
-    public func getHomeTimeline(url: String, token: [String:String]) -> Single<[HomeTimeline]> {
+    public func getTimeline(url: String, token: [String:String]) -> Single<[Timeline]> {
         return .create {observer in
             let oauthswift = OAuth1Swift(
                 consumerKey:    "aiSbp28ZF965SD1bQwDP4YHG2",
@@ -34,7 +34,7 @@ public class HomeTimelineClient {
                     guard let homeData = jsonData else {
                         fatalError("response in HomeTimeline could not be converted to JSON")
                     }
-                    observer(.success(JSON(homeData).map { HomeTimeline(homeData: $0.1) }))
+                    observer(.success(JSON(homeData).map { Timeline(homeData: $0.1) }))
                 case .failure:
                     observer(.error(APIError.getHomeTimelineError))
                 }

@@ -12,4 +12,6 @@ public enum APIError: Error {
     case getOAuthError
     case getHomeTimelineError
     case getSearchResultError
+    case getProfileError
+    case postCreatTweetError
 }

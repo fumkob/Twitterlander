@@ -1,5 +1,5 @@
 //
-//  HomeTimeline.swift
+//  Timeline.swift
 //  Twitterlander
 //
 //  Created by Fumiaki Kobayashi on 2020/07/13.
@@ -13,37 +13,38 @@ public enum MediaType {
     case movie
 }
 
-public struct HomeTimeline {
+public struct Timeline {
     public let name: String //ツイートした人の名前
     public let screenName: String //ID　＠〜
     public let profileImageUrl: String  //プロフ画像URL
     public let text: String //ツイート文
     public let idStr: String //ツイートID
     public let createdAt: Date //ツイート日時
-    public let mediaUrl: [String]? //投稿した写真URL
-    public let mediaType: [MediaType]? //写真か動画か選択
+    public var mediaUrl: [String]? //投稿した写真URL
+    public var mediaType: [MediaType]? //写真か動画か選択
     public let retweetedStatus: Bool //リツイートかの判定
-    public let retweetedName: String? //リツイートされた人の名前
-    public let retweetedScreenName: String? //リツイートされた人のID
-    public let retweetedProfileImageUrl: String? //リツイートされた人のプロフ画像URL
-    public let retweetedText: String? //リツイートされた本文
-    public let retweetedIdStr: String? //リツイートされたツイートID
-    public let retweetedCreatedAt: Date? //リツイートされたツイート日時
-    public let retweetedMediaUrl: [String]? //投稿した写真URL
-    public let retweetedMediaType: [MediaType]? //写真か動画か選択
-    public let retweetedFavoriteCount: Int? //ファボ数
-    public let retweetedSource: String? //ツイートしたアプリ名
+    public var retweetedName: String? //リツイートされた人の名前
+    public var retweetedScreenName: String? //リツイートされた人のID
+    public var retweetedProfileImageUrl: String? //リツイートされた人のプロフ画像URL
+    public var retweetedText: String? //リツイートされた本文
+    public var retweetedIdStr: String? //リツイートされたツイートID
+    public var retweetedCreatedAt: Date? //リツイートされたツイート日時
+    public var retweetedMediaUrl: [String]? //投稿した写真URL
+    public var retweetedMediaType: [MediaType]? //写真か動画か選択
+    public var retweetedFavoriteCount: Int? //ファボ数
+    public var retweetedVerified: Bool? //認証済み有無
+    public var retweetedSource: String? //ツイートしたアプリ名
     public let retweetedIsReply: Bool //リプライ判断
-    public let retweetedInReplyToScreenName: String? //リプライ先の名前
+    public var retweetedInReplyToScreenName: String? //リプライ先の名前
     public let quotedStatus: Bool //引用リツイートかの判定
-    public let quotedName: String? //引用された人の名前
-    public let quotedScreenName: String? //引用された人のID
-    public let quotedProfileImageUrl: String? //引用された人のプロフ画像URL
-    public let quotedText: String? //引用リツイート文
-    public let quotedIdStr: String? //引用リツイートID
-    public let quotedCreatedAt: Date? //引用リツイート日時
-    public let quotedMediaUrl: [String]? //投稿した写真URL
-    public let quotedMediaType: [MediaType]? //写真か動画か選択
+    public var quotedName: String? //引用された人の名前
+    public var quotedScreenName: String? //引用された人のID
+    public var quotedProfileImageUrl: String? //引用された人のプロフ画像URL
+    public var quotedText: String? //引用リツイート文
+    public var quotedIdStr: String? //引用リツイートID
+    public var quotedCreatedAt: Date? //引用リツイート日時
+    public var quotedMediaUrl: [String]? //投稿した写真URL
+    public var quotedMediaType: [MediaType]? //写真か動画か選択
     public let retweetCount: Int //リツイート数
     public let favoriteCount: Int //ファボ数
     public let isRetweeted: Bool //リツイートしたか？
@@ -51,8 +52,10 @@ public struct HomeTimeline {
     public let verified: Bool //認証済み有無
     public let source: String //ツイートしたアプリ名
     public let isReply: Bool //リプライ判断（リプライの場合の実装は別途検討）
-    public let inReplyToScreenName: String? //リプライ先の名前
+    public var inReplyToScreenName: String? //リプライ先の名前
+}
 
+extension Timeline {
     //Cyclomatic Complexityでエラーが発生するため代替案の検討が必要
     init(homeData: JSON) {
         //ツイート情報
@@ -112,34 +115,22 @@ public struct HomeTimeline {
         }
         if let retweetedName = homeData["retweeted_status"]["user"]["name"].string {
             self.retweetedName = retweetedName
-        } else {
-            self.retweetedName = nil
         }
         if let retweetedScreenName = homeData["retweeted_status"]["user"]["screen_name"].string {
             self.retweetedScreenName = retweetedScreenName
-        } else {
-            self.retweetedScreenName = nil
         }
         if let retweetedProfileImageUrl = homeData["retweeted_status"]["user"]["profile_image_url_https"].string {
             self.retweetedProfileImageUrl = retweetedProfileImageUrl
-        } else {
-            self.retweetedProfileImageUrl = nil
         }
         if let retweetedText = homeData["retweeted_status"]["text"].string {
             self.retweetedText = retweetedText
-        } else {
-            self.retweetedText = nil
         }
         if let retweetedIdStr = homeData["retweeted_status"]["id_str"].string {
             self.retweetedIdStr = retweetedIdStr
-        } else {
-            self.retweetedIdStr = nil
         }
         if let retweetedCreatedAt = homeData["retweeted_status"]["created_at"].string {
             let retweetedCreatedAtFormatted = Date(fromISO8601: retweetedCreatedAt)
             self.retweetedCreatedAt = retweetedCreatedAtFormatted
-        } else {
-            self.retweetedCreatedAt = nil
         }
         if let retweetedSource = homeData["retweeted_status"]["source"].string {
             if let firstIndex = retweetedSource.firstIndex(of: ">") {
@@ -154,8 +145,6 @@ public struct HomeTimeline {
             } else {
                 self.retweetedSource = retweetedSource
             }
-        } else {
-            self.retweetedSource = nil
         }
         
         if !homeData["retweeted_status"]["extended_entities"]["media"].isEmpty {
@@ -173,21 +162,18 @@ public struct HomeTimeline {
             }
             self.retweetedMediaUrl = retweetedMediaUrl
             self.retweetedMediaType = retweetedMediaType
-        } else {
-            self.retweetedMediaUrl = nil
-            self.retweetedMediaType = nil
         }
         if let retweetedFavoriteCount = homeData["retweeted_status"]["favorite_count"].int {
             self.retweetedFavoriteCount = retweetedFavoriteCount
-        } else {
-            self.retweetedFavoriteCount = nil
+        }
+        if let retweetedVerified = homeData["retweeted_status"]["user"]["verified"].bool {
+            self.retweetedVerified = retweetedVerified
         }
         if let retweetedInReplyToScreenName = homeData["retweeted_status"]["in_reply_to_screen_name"].string {
             self.retweetedIsReply = true
             self.retweetedInReplyToScreenName = retweetedInReplyToScreenName
         } else {
             self.retweetedIsReply = false
-            self.retweetedInReplyToScreenName = nil
         }
         
         //引用ツイート情報
@@ -198,34 +184,22 @@ public struct HomeTimeline {
         }
         if let quotedName = homeData["quoted_status"]["user"]["name"].string {
             self.quotedName = quotedName
-        } else {
-            self.quotedName = nil
         }
         if let quotedScreenName = homeData["quoted_status"]["user"]["screen_name"].string {
             self.quotedScreenName = quotedScreenName
-        } else {
-            self.quotedScreenName = nil
         }
         if let quotedProfileImageUrl = homeData["quoted_status"]["user"]["profile_image_url_https"].string {
             self.quotedProfileImageUrl = quotedProfileImageUrl
-        } else {
-            self.quotedProfileImageUrl = nil
         }
         if let quotedText = homeData["quoted_status"]["text"].string {
             self.quotedText = quotedText
-        } else {
-            self.quotedText = nil
         }
         if let quotedIdStr = homeData["quoted_status"]["id_str"].string {
             self.quotedIdStr = quotedIdStr
-        } else {
-            self.quotedIdStr = nil
         }
         if let quotedCreatedAt = homeData["quoted_status"]["created_at"].string {
             let quotedCreatedAtFormatted = Date(fromISO8601: quotedCreatedAt)
             self.quotedCreatedAt = quotedCreatedAtFormatted
-        } else {
-            self.quotedCreatedAt = nil
         }
         if !homeData["quoted_status"]["extended_entities"]["media"].isEmpty {
             let quotedMedia = homeData["quoted_status"]["extended_entities"]["media"]
@@ -242,9 +216,6 @@ public struct HomeTimeline {
             }
             self.quotedMediaUrl = quotedMediaUrl
             self.quotedMediaType = quotedMediaType
-        } else {
-            self.quotedMediaUrl = nil
-            self.quotedMediaType = nil
         }
         
         //一般情報
@@ -291,7 +262,6 @@ public struct HomeTimeline {
             self.inReplyToScreenName = inReplyToScreenName
         } else {
             self.isReply = false
-            self.inReplyToScreenName = nil
         }
     }
 }

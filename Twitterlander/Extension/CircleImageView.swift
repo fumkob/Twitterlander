@@ -9,7 +9,7 @@
 
 import UIKit
 
-class CircleImageView: UIImageView {
+open class CircleImageView: UIImageView {
     
     open override func awakeFromNib() {
         super.awakeFromNib()

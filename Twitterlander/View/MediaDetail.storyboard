@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Media Detail View Controller-->
+        <scene sceneID="rKP-fL-9MS">
+            <objects>
+                <viewController storyboardIdentifier="mediaDetail" id="Zu7-F4-Ugc" customClass="MediaDetailViewController" customModule="Twitterlander" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="FaV-eJ-DVb">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QUz-Ow-xbO">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                                <subviews>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="vOO-L2-aJ0">
+                                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                                    </imageView>
+                                </subviews>
+                                <color key="backgroundColor" cocoaTouchSystemColor="viewFlipsideBackgroundColor"/>
+                                <constraints>
+                                    <constraint firstItem="vOO-L2-aJ0" firstAttribute="width" secondItem="zkC-le-acX" secondAttribute="width" priority="250" id="AgK-aM-CB3"/>
+                                    <constraint firstItem="vOO-L2-aJ0" firstAttribute="height" secondItem="zkC-le-acX" secondAttribute="height" priority="250" id="GHH-Q9-fKb"/>
+                                    <constraint firstItem="vOO-L2-aJ0" firstAttribute="leading" secondItem="tA1-Vf-KPL" secondAttribute="leading" id="QJg-c1-IdI"/>
+                                    <constraint firstItem="vOO-L2-aJ0" firstAttribute="trailing" secondItem="tA1-Vf-KPL" secondAttribute="trailing" id="p2N-nL-mCA"/>
+                                    <constraint firstItem="vOO-L2-aJ0" firstAttribute="top" secondItem="tA1-Vf-KPL" secondAttribute="top" id="vfJ-Xz-knV"/>
+                                    <constraint firstItem="vOO-L2-aJ0" firstAttribute="bottom" secondItem="tA1-Vf-KPL" secondAttribute="bottom" id="weP-cj-Efe"/>
+                                </constraints>
+                                <viewLayoutGuide key="contentLayoutGuide" id="tA1-Vf-KPL"/>
+                                <viewLayoutGuide key="frameLayoutGuide" id="zkC-le-acX"/>
+                            </scrollView>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstAttribute="bottom" secondItem="QUz-Ow-xbO" secondAttribute="bottom" id="2xj-np-D4u"/>
+                            <constraint firstItem="QUz-Ow-xbO" firstAttribute="leading" secondItem="oVY-R9-NR8" secondAttribute="leading" id="CKW-MT-q7E"/>
+                            <constraint firstItem="QUz-Ow-xbO" firstAttribute="top" secondItem="FaV-eJ-DVb" secondAttribute="top" id="lnO-5j-fqz"/>
+                            <constraint firstItem="oVY-R9-NR8" firstAttribute="trailing" secondItem="QUz-Ow-xbO" secondAttribute="trailing" id="zL7-Tr-VLS"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="oVY-R9-NR8"/>
+                    </view>
+                    <connections>
+                        <outlet property="mediaImageView" destination="vOO-L2-aJ0" id="ecz-i7-P7n"/>
+                        <outlet property="mediaScrollView" destination="QUz-Ow-xbO" id="Ajm-DG-4cb"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ROw-gv-ZTE" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-330.43478260869568" y="-263.16964285714283"/>
+        </scene>
+    </scenes>
+</document>

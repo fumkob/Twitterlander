@@ -29,6 +29,12 @@ extension Date {
             formatter.dateFormat = "HH:mm"
             return formatter
         }()
+        
+        static let profileDateStyle: DateFormatter = {
+            let formatter = DateFormatter()
+            formatter.dateFormat = "YYYY年MM月"
+            return formatter
+        }()
     }
     init?(fromISO8601 string: String) {
         guard let date = Const.ISO8601Formatter.date(from: string) else {
@@ -42,5 +48,8 @@ extension Date {
     }
     func twitterTimeStyle() -> String {
         return Const.twitterTimeStyle.string(from: self)
+    }
+    func profileDateStyle() -> String {
+        return Const.profileDateStyle.string(from: self)
     }
 }
