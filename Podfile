@@ -11,6 +11,7 @@ target 'Twitterlander' do
   pod 'RxCocoa', '~> 5'
   pod 'Kingfisher', '~> 5.0'
   pod 'OAuthSwift', '~> 2.0.0'
+  pod 'Tabman', '~> 2.9'
   
   # Pods for Twitterlander
 

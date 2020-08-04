@@ -26,7 +26,7 @@ public struct TweetDetailData {
 }
 
 public extension TweetDetailData {
-    init(normalTweet homeTimeline: HomeTimeline) {
+    init(normalTweet homeTimeline: Timeline) {
         self.name = homeTimeline.name
         self.screenName = homeTimeline.screenName
         self.profileImageUrl = homeTimeline.profileImageUrl
@@ -43,7 +43,7 @@ public extension TweetDetailData {
         self.source = homeTimeline.source
     }
     
-    init(retweet homeTimeline: HomeTimeline) {
+    init(retweet homeTimeline: Timeline) {
         guard let retweetedName = homeTimeline.retweetedName else {
             fatalError("retweetedName is nil")
         }
@@ -65,6 +65,9 @@ public extension TweetDetailData {
         guard let retweetedFavoriteCount = homeTimeline.retweetedFavoriteCount else {
             fatalError("retweetedProfileImage is nil")
         }
+        guard let retweetedVerified = homeTimeline.retweetedVerified else {
+            fatalError("retweetedVerified is nil")
+        }
         guard let retweetedSource = homeTimeline.retweetedSource else {
             fatalError("retweetedProfileImage is nil")
         }
@@ -80,7 +83,7 @@ public extension TweetDetailData {
         self.retweetCount = homeTimeline.retweetCount
         self.isRetweeted = homeTimeline.isRetweeted
         self.isFavorited = homeTimeline.isFavorited
-        self.verified = homeTimeline.verified
+        self.verified = retweetedVerified
         self.source = retweetedSource
     }
     

@@ -53,16 +53,16 @@ class TweetDetailViewController: UIViewController, SwipeBackable {
         setSwipeBack()
         tweetDetailViewSetup()
         activityIndicatorSetup()
-        navigationBarSetup()
         tableSetup()
         generalInformationSetup()
         mediaSetup()
         numbersSetup()
         tweetDetailProfileImageTapped()
+        transitionToProfile()
     }
     
-    override func viewDidLayoutSubviews() {
-        tableViewHeight.constant = tableView.contentSize.height
+    override func viewWillAppear(_ animated: Bool) {
+        navigationBarSetup()
     }
     
     //View Model指定
@@ -72,32 +72,39 @@ class TweetDetailViewController: UIViewController, SwipeBackable {
     
     private func activityIndicatorSetup() {
         activityIndicator.hidesWhenStopped = true
-        let activityIndicatorStatus = tweetDetailViewModel.activityindicatorStatus
-        activityIndicatorStatus
+        tweetDetailViewModel.activityindicatorStatus
             .drive(self.activityIndicator.rx.isAnimating)
             .disposed(by: disposeBag)
     }
     //ナビゲーションバー設定
     private func navigationBarSetup() {
         self.navigationItem.title = "ツイート"
+        self.navigationController!.navigationBar.tintColor = .black
     }
-    
+    //テーブル設定
     private func tableSetup() {
         tableView.register(UINib(nibName: "DefaultTweetCell", bundle: nil), forCellReuseIdentifier: "defaultCell")
         //リプライを検索
         tweetDetailViewModel.getReplies(tweetDetailData: tweetDetailData)
         //データをセル格納
-        let searchResult = tweetDetailViewModel.searchResult
-        searchResult
+        tweetDetailViewModel.searchResult
             .drive(tableView.rx.items) {[weak self] tableView, _, data in
                 guard let cell = tableView.dequeueReusableCell(withIdentifier: "defaultCell") as? DefaultTweetCell else {
                     fatalError("cell is nil")
                 }
                 cell.replySetup(data: data)
-                self?.replyProfileImageTapped(cell: cell)
+                self?.replyProfileImageTapped(cell: cell, data: data)
                 return cell
         }
         .disposed(by: disposeBag)
+        //テーブル高さ設定
+        tableView.rx.observe(CGSize.self, "contentSize")
+            .subscribe(onNext: { [weak self] size in
+                if let size = size {
+                    self?.tableViewHeight.constant = size.height
+                }
+            })
+            .disposed(by: disposeBag)
     }
     
     private func generalInformationSetup() {
@@ -193,27 +200,33 @@ class TweetDetailViewController: UIViewController, SwipeBackable {
         let detailImageTapGesture = UITapGestureRecognizer()
         profileImage.addGestureRecognizer(detailImageTapGesture)
         detailImageTapGesture.rx.event
-            .subscribe(onNext: {[weak self] _ in
-                self?.transitionToProfile()
+            .subscribe(onNext: {[unowned self] _ in
+                self.tweetDetailViewModel.transitionProcessToProfile(name: self.tweetDetailData.screenName)
             })
             .disposed(by: disposeBag)
     }
     //リプライプロフィール画像タップ時処理
-    private func replyProfileImageTapped(cell: DefaultTweetCell) {
+    private func replyProfileImageTapped(cell: DefaultTweetCell, data: SearchResult) {
         let replyImageTapGesture = UITapGestureRecognizer()
         cell.profileImage.addGestureRecognizer(replyImageTapGesture)
         replyImageTapGesture.rx.event
             .subscribe(onNext: {[weak self] _ in
-                self?.transitionToProfile()
+                self?.tweetDetailViewModel.transitionProcessToProfile(name: data.screenName)
             })
             .disposed(by: disposeBag)
     }
     //プロフィール画面遷移
     private func transitionToProfile() {
-        let profileStoryboard = UIStoryboard(name: "Profile", bundle: nil)
-        guard let profileViewController = profileStoryboard.instantiateViewController(withIdentifier: "profile") as? ProfileViewController else {
-            fatalError("Storyboard named \"Profile\" does NOT exists.")
-        }
-        navigationController?.pushViewController(profileViewController, animated: true)
+        tweetDetailViewModel.screenName
+            .drive(onNext: {[weak self] screenName in
+                let profileStoryboard = UIStoryboard(name: "Profile", bundle: nil)
+                guard let profileViewController = profileStoryboard.instantiateViewController(withIdentifier: "profile") as? ProfileViewController else {
+                    fatalError("Storyboard named \"Profile\" does NOT exists.")
+                }
+                
+                profileViewController.screenName = screenName
+                self?.navigationController?.pushViewController(profileViewController, animated: true)
+        })
+        .disposed(by: disposeBag)
     }
 }

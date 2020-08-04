@@ -58,6 +58,9 @@ class DefaultTweetCell: UITableViewCell {
     @IBOutlet weak var media2LeadingEqualToMedia4Leading: NSLayoutConstraint!
     @IBOutlet weak var media3TopEqualToMedia4Top: NSLayoutConstraint!
     
+    @IBOutlet weak var nameLabelBottomToTweetTextTop: NSLayoutConstraint!
+    @IBOutlet weak var nameLabelBottomToReplyStackViewTop: NSLayoutConstraint!
+    @IBOutlet weak var replyStackViewBottomToTweetTextTop: NSLayoutConstraint!
     @IBOutlet weak var tweetTextBottomToViewStackTop: NSLayoutConstraint!
     
     @IBOutlet weak var nameLabelToTop: NSLayoutConstraint!
@@ -73,8 +76,8 @@ class DefaultTweetCell: UITableViewCell {
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
     }
-    
-    public func defaultTweetSetup(data: HomeTimeline) {
+    // MARK: - Default Tweet
+    public func defaultTweetSetup(data: Timeline) {
         nameLabel.text = data.name
         screenNameLabel.text = "@" + data.screenName
         timeLabel.text = timeCalculation.dateToString(createdAt: data.createdAt)
@@ -111,19 +114,25 @@ class DefaultTweetCell: UITableViewCell {
         media4.isHidden = true
         retweetLabel.isHidden = true
         retweetSymbol.isHidden = true
+        
+        //レイアウト制約一旦全解除
+        constraintReset()
+        //制約有効化
+        NSLayoutConstraint.activate([nameLabelToTop])
+        
         switch data.isReply {
         case true:
             replyStackView.isHidden = false
             if let inReplyToScreenName = data.inReplyToScreenName {
+                tweetTextLabel.text = data.text.replacingOccurrences(of: "@" + inReplyToScreenName + " ", with: "")
                 replyScreenNameButton.setTitle("@\(inReplyToScreenName)さん", for: .normal)
+                NSLayoutConstraint.activate([nameLabelBottomToReplyStackViewTop])
+                NSLayoutConstraint.activate([replyStackViewBottomToTweetTextTop])
             }
         case false:
             replyStackView.isHidden = true
+            NSLayoutConstraint.activate([nameLabelBottomToTweetTextTop])
         }
-        
-        //レイアウト制約一旦全解除
-        constraintReset()
-        NSLayoutConstraint.activate([nameLabelToTop])
 
         if let mediaUrl = data.mediaUrl {
             switch mediaUrl.count {
@@ -147,8 +156,8 @@ class DefaultTweetCell: UITableViewCell {
             NSLayoutConstraint.activate([tweetTextBottomToViewStackTop])
         }
     }
-    
-    public func retweetSetup(data: HomeTimeline) {
+    // MARK: - Retweet
+    public func retweetSetup(data: Timeline) {
         nameLabel.text = data.retweetedName
         guard let retweetedScreenName = data.retweetedScreenName else { fatalError("retweetedScreenName is nil")}
         screenNameLabel.text = "@" + retweetedScreenName
@@ -179,8 +188,10 @@ class DefaultTweetCell: UITableViewCell {
         case false:
             retweetLabel.text = "\(data.name)さんがリツイート"
         }
-        
-        switch data.verified {
+        guard let retweetedVerified = data.retweetedVerified else {
+            fatalError("retweetedVerified is nil")
+        }
+        switch retweetedVerified {
         case true:
             NSLayoutConstraint.deactivate([constraintWithoutVerification])
             NSLayoutConstraint.activate([constraintWithVerification])
@@ -209,7 +220,9 @@ class DefaultTweetCell: UITableViewCell {
         
         //レイアウト制約一旦全解除
         constraintReset()
+        //制約有効化
         NSLayoutConstraint.activate([retweetLabelToTop])
+        NSLayoutConstraint.activate([nameLabelBottomToTweetTextTop])
         NSLayoutConstraint.activate([retweetLabelToNameLabel])
         
         if let mediaUrl = data.retweetedMediaUrl {
@@ -233,6 +246,7 @@ class DefaultTweetCell: UITableViewCell {
             NSLayoutConstraint.activate([tweetTextBottomToViewStackTop])
         }
     }
+    // MARK: - Reply
     public func replySetup(data: SearchResult) {
         nameLabel.text = data.name
         screenNameLabel.text = "@" + data.screenName
@@ -279,7 +293,10 @@ class DefaultTweetCell: UITableViewCell {
         
         //レイアウト制約一旦全解除
         constraintReset()
+        //制約有効化
         NSLayoutConstraint.activate([nameLabelToTop])
+        NSLayoutConstraint.activate([nameLabelBottomToReplyStackViewTop])
+        NSLayoutConstraint.activate([replyStackViewBottomToTweetTextTop])
 
         if let mediaUrl = data.mediaUrl {
             switch mediaUrl.count {
@@ -331,8 +348,11 @@ class DefaultTweetCell: UITableViewCell {
         NSLayoutConstraint.deactivate([media2LeadingEqualToMedia4Leading])
         NSLayoutConstraint.deactivate([media3TopEqualToMedia4Top])
         
+        NSLayoutConstraint.deactivate([nameLabelBottomToTweetTextTop])
+        NSLayoutConstraint.deactivate([nameLabelBottomToReplyStackViewTop])
+        NSLayoutConstraint.deactivate([replyStackViewBottomToTweetTextTop])
         NSLayoutConstraint.deactivate([tweetTextBottomToViewStackTop])
-        
+
         NSLayoutConstraint.deactivate([retweetLabelToTop])
         NSLayoutConstraint.deactivate([retweetLabelToNameLabel])
         NSLayoutConstraint.deactivate([nameLabelToTop])
