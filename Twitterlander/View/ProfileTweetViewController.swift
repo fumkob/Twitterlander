@@ -16,7 +16,6 @@ class ProfileTweetViewController: UIViewController {
     
     private let disposeBag = DisposeBag()
     private var profileTweetViewModel: ProfileTweetViewModel!
-    public var screenName: String!
     
     override func viewDidLoad() {
         super.viewDidLoad()

@@ -20,6 +20,8 @@ open class ProfileMediaViewModel {
     //遷移用
     private let mediaUrlTransitionEvent = PublishSubject<[URL?]>()
     open var mediaUrlTransition: Driver<[URL?]> {return mediaUrlTransitionEvent.asDriver(onErrorDriveWith: .empty())}
+    //取得用スクリーン名
+    private var givenScreenName: String = ""
     
     init(client: TimelineClient) {
         self.timelineClient = client
@@ -29,26 +31,28 @@ open class ProfileMediaViewModel {
         disposeBag = DisposeBag()
         
         ProfileViewInfo.shared.sendScreenName
-            .subscribe(onNext: { [unowned self] name in
-                let url = self.userTimelineUrlGenerator(screenName: name)
-                guard let token = self.userDefaults.dictionary(forKey: "token") as? [String:String] else {
-                    fatalError("token is nil")
-                }
-                let backgroundScheduler = ConcurrentDispatchQueueScheduler(qos: .background)
-                //API通信
-                self.timelineClient.getTimeline(url: url, token: token)
-                    .subscribeOn(backgroundScheduler)
-                    .subscribe(onSuccess: { [unowned self] response in
-                        let urls = self.mediaUrlGenerator(response: response)
-                        self.mediaUrlArrayEvent.onNext(urls)
-                        self.mediaUrls = urls
-                        }, onError: { error in
-                            print(error)
-                    })
-                    .disposed(by: self.disposeBag)
-                
+            .subscribe(onNext: { name in
+                self.givenScreenName = name
             })
             .disposed(by: disposeBag)
+        
+        let url = userTimelineUrlGenerator(screenName: givenScreenName)
+        guard let token = userDefaults.dictionary(forKey: "token") as? [String:String] else {
+            fatalError("token is nil")
+        }
+        //API通信
+        DispatchQueue.global(qos: .background).async {
+            self.timelineClient.getTimeline(url: url, token: token)
+                .subscribe(onSuccess: { [unowned self] response in
+                    let urls = self.mediaUrlGenerator(response: response)
+                    self.mediaUrlArrayEvent.onNext(urls)
+                    self.mediaUrls = urls
+                    }, onError: { error in
+                        print(error)
+                })
+                .disposed(by: self.disposeBag)
+        }
+        
     }
     open func userTimelineUrlGenerator(screenName: String) -> String {
         let baseUrl = "https://api.twitter.com/1.1/statuses/user_timeline.json"
@@ -66,10 +70,11 @@ open class ProfileMediaViewModel {
     }
     //コンテンツ高さ送信
     open func postContentsHeight(height: CGFloat) {
-        ProfileViewInfo.shared.receiveHeight.onNext(height)
+//        print(height)
+        ProfileViewInfo.shared.receiveCollectionHeight.onNext(height)
     }
     //Media Detail遷移処理
-    open func transitionProcessToMediaDetail(row: Int) {        
+    open func transitionProcessToMediaDetail(row: Int) {
         ProfileViewInfo.shared.receiveRow.onNext(row)
         mediaUrlTransitionEvent.onNext(mediaUrls)
     }

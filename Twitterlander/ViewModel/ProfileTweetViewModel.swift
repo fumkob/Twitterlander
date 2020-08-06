@@ -20,6 +20,8 @@ open class ProfileTweetViewModel {
     //プロフィール遷移データ用
     private let screenNameEvent = PublishSubject<String>()
     open var screenName: Driver<String> {return screenNameEvent.asDriver(onErrorDriveWith: .empty())}
+    //取得用スクリーン名
+    private var givenScreenName: String = ""
     
     private var disposeBag = DisposeBag()
     private let userDefaults = UserDefaults.standard
@@ -32,25 +34,25 @@ open class ProfileTweetViewModel {
         disposeBag = DisposeBag()
         
         ProfileViewInfo.shared.sendScreenName
-            .subscribe(onNext: { [unowned self] name in
-                let url = self.userTimelineUrlGenerator(screenName: name)
-                guard let token = self.userDefaults.dictionary(forKey: "token") as? [String:String] else {
-                    fatalError("token is nil")
-                }
-                let backgroundScheduler = ConcurrentDispatchQueueScheduler(qos: .background)
-                
-                //API通信
-                self.userTimelineClient.getTimeline(url: url, token: token)
-                    .subscribeOn(backgroundScheduler)
-                    .subscribe(onSuccess: { [weak self] response in
-                        self?.userTimelineArrayEvent.onNext(response)
-                        }, onError: { error in
-                            print(error)
-                    })
-                    .disposed(by: self.disposeBag)
-                
+            .subscribe(onNext: { name in
+                self.givenScreenName = name
             })
             .disposed(by: disposeBag)
+        
+        let url = userTimelineUrlGenerator(screenName: givenScreenName)
+        guard let token = userDefaults.dictionary(forKey: "token") as? [String:String] else {
+            fatalError("token is nil")
+        }
+        //API通信
+        DispatchQueue.global(qos: .background).async {
+            self.userTimelineClient.getTimeline(url: url, token: token)
+                .subscribe(onSuccess: { [weak self] response in
+                    self?.userTimelineArrayEvent.onNext(response)
+                    }, onError: { error in
+                        print(error)
+                })
+                .disposed(by: self.disposeBag)
+        }
     }
     //詳細ツイート画面遷移
     open func transitionProcessToTweetDetail(homeTimeline: Timeline) {
@@ -85,6 +87,7 @@ open class ProfileTweetViewModel {
     }
     //コンテンツ高さ送信
     open func postContentsHeight(height: CGFloat) {
-        ProfileViewInfo.shared.receiveHeight.onNext(height)
+//        print(height)
+        ProfileViewInfo.shared.receiveTableHeight.onNext(height)
     }
 }

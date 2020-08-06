@@ -42,6 +42,7 @@
 		A566AF1724B7177600D2E7F6 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A566AF1524B7177600D2E7F6 /* LaunchScreen.storyboard */; };
 		A566AF2224B7177600D2E7F6 /* LoginViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A566AF2124B7177600D2E7F6 /* LoginViewModelTests.swift */; };
 		A566AF2D24B7177600D2E7F6 /* TwitterlanderUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A566AF2C24B7177600D2E7F6 /* TwitterlanderUITests.swift */; };
+		A579FE5124DA7239005EDAE8 /* AlertExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = A579FE5024DA7239005EDAE8 /* AlertExtension.swift */; };
 		A585431824D2C4F700588D4A /* ProfileContentsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A585431724D2C4F700588D4A /* ProfileContentsViewController.swift */; };
 		A585431C24D2C64A00588D4A /* ProfileTweetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A585431B24D2C64A00588D4A /* ProfileTweetViewController.swift */; };
 		A585431E24D2C65C00588D4A /* ProfileMediaViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A585431D24D2C65C00588D4A /* ProfileMediaViewController.swift */; };
@@ -132,6 +133,7 @@
 		A566AF2824B7177600D2E7F6 /* TwitterlanderUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TwitterlanderUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		A566AF2C24B7177600D2E7F6 /* TwitterlanderUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TwitterlanderUITests.swift; sourceTree = "<group>"; };
 		A566AF2E24B7177600D2E7F6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		A579FE5024DA7239005EDAE8 /* AlertExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertExtension.swift; sourceTree = "<group>"; };
 		A585431724D2C4F700588D4A /* ProfileContentsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileContentsViewController.swift; sourceTree = "<group>"; };
 		A585431B24D2C64A00588D4A /* ProfileTweetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileTweetViewController.swift; sourceTree = "<group>"; };
 		A585431D24D2C65C00588D4A /* ProfileMediaViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileMediaViewController.swift; sourceTree = "<group>"; };
@@ -349,6 +351,7 @@
 				A55289BA24BD8AE700B0671A /* DateExtension.swift */,
 				A587448D24CB388F004BB337 /* SwipeBackable.swift */,
 				A544C2B924D1113100DA7A95 /* UILabelExtension.swift */,
+				A579FE5024DA7239005EDAE8 /* AlertExtension.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -666,6 +669,7 @@
 				A553E1B324D3C03800FD08EA /* ProfileViewModel.swift in Sources */,
 				A55289BB24BD8AE700B0671A /* DateExtension.swift in Sources */,
 				A544C2BA24D1113100DA7A95 /* UILabelExtension.swift in Sources */,
+				A579FE5124DA7239005EDAE8 /* AlertExtension.swift in Sources */,
 				A553E1B524D3C08400FD08EA /* ProfileClient.swift in Sources */,
 				A56404E524B8251E00B17C89 /* CustomButton.swift in Sources */,
 				A56404DD24B81DC900B17C89 /* LoginViewController.swift in Sources */,
