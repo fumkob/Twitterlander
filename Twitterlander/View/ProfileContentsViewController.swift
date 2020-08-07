@@ -9,6 +9,8 @@
 import UIKit
 import Tabman
 import Pageboy
+import RxSwift
+import RxCocoa
 
 class ProfileContentsViewController: TabmanViewController {
     private lazy var viewControllers: [UIViewController] = {
@@ -47,7 +49,8 @@ class ProfileContentsViewController: TabmanViewController {
                                     direction: direction,
                                     animated: animated)
         
-                print("didScrollToPageAtIndex: \(index)")
+        print("didScrollToPageAtIndex: \(index)")
+        ProfileViewInfo.shared.receiveIndex.onNext(index)
     }
 }
 

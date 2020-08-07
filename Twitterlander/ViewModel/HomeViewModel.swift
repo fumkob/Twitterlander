@@ -33,18 +33,18 @@ open class HomeViewModel {
         guard let token = userDefaults.dictionary(forKey: "token") as? [String:String] else {
             fatalError("token is nil")
         }
-        let backgroundScheduler = ConcurrentDispatchQueueScheduler(qos: .background)
         
         disposeBag = DisposeBag()
         //API通信
-        homeTimelineClient.getTimeline(url: url, token: token)
-            .subscribeOn(backgroundScheduler)
-            .subscribe(onSuccess: { [weak self] response in
-                self?.homeTimelineArrayEvent.onNext(response)
-                }, onError: { error in
-                    print(error)
-            })
-            .disposed(by: disposeBag)
+        DispatchQueue.global(qos: .background).async {
+            self.homeTimelineClient.getTimeline(url: url, token: token)
+                .subscribe(onSuccess: { [weak self] response in
+                    self?.homeTimelineArrayEvent.onNext(response)
+                    }, onError: { error in
+                        print(error)
+                })
+                .disposed(by: self.disposeBag)
+        }
     }
     //詳細ツイート画面遷移
     open func transitionProcessToTweetDetail(homeTimeline: Timeline) {

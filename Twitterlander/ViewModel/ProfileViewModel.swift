@@ -34,18 +34,18 @@ open class ProfileViewModel {
         guard let token = userDefaults.dictionary(forKey: "token") as? [String:String] else {
             fatalError("token is nil")
         }
-        let backgroundScheduler = ConcurrentDispatchQueueScheduler(qos: .background)
         
         disposeBag = DisposeBag()
         //API通信
-        profileClient.getProfile(url: url, token: token)
-            .subscribeOn(backgroundScheduler)
-            .subscribe(onSuccess: { [weak self] response in
-                self?.profileDataEvent.onNext(response)
-                }, onError: { error in
-                    print(error)
-            })
-            .disposed(by: disposeBag)
+        DispatchQueue.global(qos: .background).async {
+            self.profileClient.getProfile(url: url, token: token)
+                .subscribe(onSuccess: { [weak self] response in
+                    self?.profileDataEvent.onNext(response)
+                    }, onError: { error in
+                        print(error)
+                })
+                .disposed(by: self.disposeBag)
+        }
     }
     
     open func profileUrlGenerator(screenName: String) -> String {

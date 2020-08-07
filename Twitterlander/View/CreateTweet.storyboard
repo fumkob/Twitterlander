@@ -23,7 +23,7 @@
                                 </constraints>
                                 <state key="normal" title="キャンセル"/>
                                 <connections>
-                                    <segue destination="Kq0-SU-ZT1" kind="unwind" unwindAction="testWithSegue:" id="U6h-5z-oVc"/>
+                                    <segue destination="Kq0-SU-ZT1" kind="unwind" unwindAction="cancelTappedWithSegue:" id="eeU-MS-VGR"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MNa-kl-tB2" customClass="CustomButton" customModule="Twitterlander" customModuleProvider="target">
@@ -42,9 +42,6 @@
                                         <real key="value" value="15"/>
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
-                                <connections>
-                                    <segue destination="Kq0-SU-ZT1" kind="unwind" unwindAction="createTweetWithSegue:" id="c7s-PZ-JAB"/>
-                                </connections>
                             </button>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" placeholder="いまどうしてる？" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="BPt-p0-sH6">
                                 <rect key="frame" x="20" y="94" width="374" height="768"/>
@@ -65,6 +62,10 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="1B3-8d-ypi"/>
                     </view>
+                    <connections>
+                        <outlet property="tweetButton" destination="MNa-kl-tB2" id="DsQ-hZ-qLE"/>
+                        <outlet property="tweetText" destination="BPt-p0-sH6" id="Ewb-Cd-a3Q"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="542-oH-lIM" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
                 <exit id="Kq0-SU-ZT1" userLabel="Exit" sceneMemberID="exit"/>

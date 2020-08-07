@@ -14,6 +14,7 @@ class HomeViewController: UIViewController {
     private var homeViewModel: HomeViewModel!
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var plusButtonImage: UIImageView!
+    private var reloadButton: UIBarButtonItem!
     
     private var disposeBag = DisposeBag()
     
@@ -58,6 +59,14 @@ class HomeViewController: UIViewController {
     private func navigationBarSetup() {
         self.navigationItem.title = "Home"
         self.navigationController!.navigationBar.tintColor = .black
+        reloadButton = UIBarButtonItem(barButtonSystemItem: .refresh, target: self, action: nil)
+        self.navigationItem.rightBarButtonItems = [reloadButton]
+        
+        reloadButton.rx.tap
+            .subscribe(onNext: {[weak self] in
+                self?.homeViewModel.requestHomeTimeline()
+            })
+            .disposed(by: disposeBag)
     }
     //セルタップ時処理
     private func tableViewCellTapped() {
@@ -119,16 +128,19 @@ class HomeViewController: UIViewController {
                 guard let createTweetViewController = createTweetStoryboard.instantiateViewController(withIdentifier: "createTweet") as? CreateTweetViewController else {
                     fatalError("Storyboard named \"CreateTweet\" does NOT exists.")
                 }
+                createTweetViewController.delegate = self
                 self?.present(createTweetViewController, animated: true, completion: nil)
             })
             .disposed(by: disposeBag)
     }
     //dismiss
-    @IBAction func test(segue: UIStoryboardSegue) {
-        // segue実行時にここが実行される
+    @IBAction func cancelTapped(segue: UIStoryboardSegue) {
     }
-    //ツイート
-    @IBAction func createTweet(segue: UIStoryboardSegue) {
+}
+
+extension HomeViewController: CreateTweetViewControllerDelegate {
+    public func dismissCreateView(_ viewController: CreateTweetViewController) {
+        dismiss(animated: true, completion: nil)
         homeViewModel.requestHomeTimeline()
     }
 }

@@ -38,21 +38,21 @@ open class TweetDetailViewModel {
         guard let token = userDefaults.dictionary(forKey: "token") as? [String:String] else {
             fatalError("token is nil")
         }
-        let backgroundScheduler = ConcurrentDispatchQueueScheduler(qos: .background)
         
         disposeBag = DisposeBag()
         //API通信
-        searchClient.getSearchResult(url: url, token: token)
-            .subscribeOn(backgroundScheduler)
-            .subscribe(onSuccess: { [weak self] response in
-                self?.searchResultEvent.onNext(response
-                    .filter({$0.inReplyToStatusIdStr == data.idStr})
-                )
-                self?.activityIndicatorStatusEvent.onNext(false)
-                }, onError: { error in
-                    print(error)
-            })
-            .disposed(by: disposeBag)
+        DispatchQueue.global(qos: .background).async {
+            self.searchClient.getSearchResult(url: url, token: token)
+                .subscribe(onSuccess: { [weak self] response in
+                    self?.searchResultEvent.onNext(response
+                        .filter({$0.inReplyToStatusIdStr == data.idStr})
+                    )
+                    self?.activityIndicatorStatusEvent.onNext(false)
+                    }, onError: { error in
+                        print(error)
+                })
+                .disposed(by: self.disposeBag)
+        }
     }
     
     //プロフィール画面遷移

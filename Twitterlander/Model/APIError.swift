@@ -13,5 +13,5 @@ public enum APIError: Error {
     case getHomeTimelineError
     case getSearchResultError
     case getProfileError
-    case postCreatTweetError
+    case postCreateTweetError
 }
