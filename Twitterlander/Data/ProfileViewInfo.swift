@@ -55,7 +55,6 @@ class ProfileViewInfo {
             .disposed(by: disposeBag)
         
         receiveScreenNameStream.subscribe(onNext: {[weak self] in
-            print("ScreenName更新：\($0)")
             self?.sendScreenNameStream.onNext($0)
         })
             .disposed(by: disposeBag)
