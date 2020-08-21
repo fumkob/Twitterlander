@@ -23,7 +23,7 @@ open class ProfileMediaViewModel {
     //取得用スクリーン名
     private var givenScreenName: String = ""
     
-    init(client: TimelineClient) {
+    init(client: TimelineClient, screenName: String) {
         self.timelineClient = client
     }
     
@@ -42,7 +42,7 @@ open class ProfileMediaViewModel {
         }
         //API通信
         DispatchQueue.global(qos: .background).async {
-            self.timelineClient.getTimeline(url: url, token: token)
+            self.timelineClient.getTimeline(with: OAuthClient())
                 .subscribe(onSuccess: { [unowned self] response in
                     let urls = self.mediaUrlGenerator(response: response)
                     self.mediaUrlArrayEvent.onNext(urls)

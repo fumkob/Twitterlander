@@ -10,6 +10,7 @@ import XCTest
 import RxSwift
 @testable import Twitterlander
 
+/*
 class ProfileMediaModelTests: XCTestCase {
     let profileMediaViewModel = ProfileMediaViewModel(client: TimelineClientMockFactory.emptyTimelineClient())
     func testUserTimelineUrlGenerator() {
@@ -104,3 +105,4 @@ class ProfileMediaModelTests: XCTestCase {
         XCTAssertEqual(mediaUrls, expectedUrls)
     }
 }
+*/

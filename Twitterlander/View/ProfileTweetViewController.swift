@@ -21,20 +21,19 @@ class ProfileTweetViewController: UIViewController {
         super.viewDidLoad()
         print("ProfileTweet ViewDidLoad")
 
-        profileTweetViewSetup()
-        tableSetup()
-        tableViewCellTapped()
-        transitionToTweetDetail()
-        transitionToProfile()
-        heightSetup()
+//        tableSetup()
+//        tableViewCellTapped()
+//        transitionToTweetDetail()
+//        transitionToProfile()
+//        heightSetup()
     }
     
-    private func profileTweetViewSetup() {
+    private func profileTweetViewSetup(screenName: String) {
         self.profileTweetViewModel = ProfileTweetViewModel(client: TimelineClient())
-        tableView.register(UINib(nibName: "DefaultTweetCell", bundle: nil), forCellReuseIdentifier: "defaultCell")
     }
     
     private func tableSetup() {
+        tableView.register(UINib(nibName: "DefaultTweetCell", bundle: nil), forCellReuseIdentifier: "defaultCell")
         //セルにデータセット
         profileTweetViewModel.requestUserTimeline()
         profileTweetViewModel.userTimelineArray
@@ -94,11 +93,7 @@ class ProfileTweetViewController: UIViewController {
     private func transitionToProfile() {
         profileTweetViewModel.screenName
             .drive(onNext: {[weak self] screenName in
-                let profileStoryboard = UIStoryboard(name: "Profile", bundle: nil)
-                guard let profileViewController = profileStoryboard.instantiateViewController(withIdentifier: "profile") as? ProfileViewController else {
-                    fatalError("Storyboard named \"Profile\" does NOT exists.")
-                }
-                profileViewController.screenName = screenName
+                let profileViewController = ProfileViewController.makeInstance(screenName: screenName)
                 self?.navigationController?.pushViewController(profileViewController, animated: true)
             })
         .disposed(by: disposeBag)
@@ -113,5 +108,13 @@ class ProfileTweetViewController: UIViewController {
                 }
             })
             .disposed(by: disposeBag)
+    }
+}
+
+extension ProfileTweetViewController {
+    static func makeInstance(screenName: String) -> ProfileTweetViewController {
+        guard let controller = UIStoryboard(name: "ProfileTweet", bundle: nil).instantiateViewController(withIdentifier: "profileTweet") as? ProfileTweetViewController else {fatalError("invalid controller")}
+        controller.profileTweetViewSetup(screenName: screenName)
+        return controller
     }
 }

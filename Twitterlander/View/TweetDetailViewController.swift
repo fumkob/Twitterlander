@@ -58,7 +58,6 @@ class TweetDetailViewController: UIViewController, SwipeBackable {
         mediaSetup()
         numbersSetup()
         tweetDetailProfileImageTapped()
-        transitionToProfile()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -201,7 +200,7 @@ class TweetDetailViewController: UIViewController, SwipeBackable {
         profileImage.addGestureRecognizer(detailImageTapGesture)
         detailImageTapGesture.rx.event
             .subscribe(onNext: {[unowned self] _ in
-                self.tweetDetailViewModel.transitionProcessToProfile(name: self.tweetDetailData.screenName)
+                self.transitionToProfile(screenName: self.tweetDetailData.screenName)
             })
             .disposed(by: disposeBag)
     }
@@ -211,22 +210,13 @@ class TweetDetailViewController: UIViewController, SwipeBackable {
         cell.profileImage.addGestureRecognizer(replyImageTapGesture)
         replyImageTapGesture.rx.event
             .subscribe(onNext: {[weak self] _ in
-                self?.tweetDetailViewModel.transitionProcessToProfile(name: data.screenName)
+                self?.transitionToProfile(screenName: data.screenName)
             })
             .disposed(by: disposeBag)
     }
     //プロフィール画面遷移
-    private func transitionToProfile() {
-        tweetDetailViewModel.screenName
-            .drive(onNext: {[weak self] screenName in
-                let profileStoryboard = UIStoryboard(name: "Profile", bundle: nil)
-                guard let profileViewController = profileStoryboard.instantiateViewController(withIdentifier: "profile") as? ProfileViewController else {
-                    fatalError("Storyboard named \"Profile\" does NOT exists.")
-                }
-                
-                profileViewController.screenName = screenName
-                self?.navigationController?.pushViewController(profileViewController, animated: true)
-        })
-        .disposed(by: disposeBag)
+    private func transitionToProfile(screenName: String) {
+        let profileViewController = ProfileViewController.makeInstance(screenName: screenName)
+        navigationController?.pushViewController(profileViewController, animated: true)
     }
 }

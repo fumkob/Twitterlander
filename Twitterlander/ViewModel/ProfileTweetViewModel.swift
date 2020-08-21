@@ -45,7 +45,7 @@ open class ProfileTweetViewModel {
         }
         //API通信
         DispatchQueue.global(qos: .background).async {
-            self.userTimelineClient.getTimeline(url: url, token: token)
+            self.userTimelineClient.getTimeline(with: OAuthClient())
                 .subscribe(onSuccess: { [weak self] response in
                     self?.userTimelineArrayEvent.onNext(response)
                     }, onError: { error in
