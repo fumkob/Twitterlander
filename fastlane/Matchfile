@@ -2,7 +2,7 @@ git_url("git@github.com:fumkob/certificates.git")
 
 storage_mode("git")
 
-type("development")
+type("enterprise")
 
 app_identifier(["com.nissan.twitterlander"])
-username("nmldev5523@gmail.com")
+username(ENV["FASTLANE_USER"])

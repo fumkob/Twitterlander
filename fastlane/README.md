@@ -20,7 +20,12 @@ or alternatively using `brew install fastlane`
 ```
 fastlane ios tests
 ```
-Description of what the lane does
+Test
+### ios dg
+```
+fastlane ios dg
+```
+Upload to deploygate
 
 ----
 

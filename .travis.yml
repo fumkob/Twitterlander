@@ -1,15 +1,19 @@
 language: objective-c
 os: osx
 osx_image: xcode11.6
-cache: cocoapods
+cache:
+  - cocoapods
+  - bundler
+ 
 before_install:
-- pod update
-- bundle install --path vendor/bundle
+  - gem install bundler --version '2.1.4'
+  - bundle install --path vendor/bundle
+
 script:
-- fastlane tests
-env:
-  global:
-    secure: RGdBSzVqUoo/+YB66F8hufY4ilx6wWcSqtduXN5+aqLiuEv9IcR2E8+Kgp0bSV0MpPktAQZ4oiGRwYT7O4bzvKZgyzNYKMZgPdjyNAKMxOW88O6XDz1IcpQM/QOxAIHeTJzUbZzW1JDFGeffyULg20euZNNd98sM2uwQUyTWrqjjIHP2C+8i5ROTu1qDwCCjUBHXogZVHFnK5NVGLWJi0z1fmsy17R06lDAI3uRKL4UeCqzvYdz5KVZpgbFtdJYtr229FRq+e0/ePK0PkkCOT288JDVzYT6Ts3mFTAzTrm+0gElPFooTB6zj9tDWKKVJqwb0JOJZD2RxuhSJvNRFWLGUrk0aERzXo3khTiKrXK6dwjnBr2yVCLYlfbcWxCIO85aPI0BnpkVI+6xHVcoj+rntFgZ3Pm3gKD0EzgVTIwd3qx6YDJrtYA65qvGHvou9nZhsTIqXhnBEGh1I3CzFCsRX8p16Xmt/arNppxcpZjLZ0IsheKfNnAuJc8Lz6PbrFeeK/Luaqd+Oto6hNjqMcqmTahT7lrI38XtC8c49HwxJCex9MW3fJczQX/BSinhvB5jl5wWJVItHwpO61ICczTAWIkJKNMYHWxc2n5dcZmISUg+auH9z284uLrG2FThCSrxGY7xRFQM56a55NESff35hqVcbfDfAReKm+bgI8Eo=
+  - bundle exec pod install --repo-update
+  - bundle exec fastlane tests
+  - if [ "$TRAVIS_BRANCH" = "release" ]; then bundle exec fastlane deploy_app; fi
+
 notifications:
   slack:
-    secure: xNJ/+qs3JXiIE/dnnj7vciF25chMDlBQYLmNkqY1nZbMENKUMMmJtQqDAz8bXhCQfjrAFA6rUVppaXVtWj+IAnrAb88KFE0MNQCeDIQYvjLvGca1ahkEEdnsY4DVxACpUQzcF0wLfCr36hQMYBQEKunxi4M5IazYFdsafmeO2Ki03/NFOrBW+DEtzV3yJmqHIxBhwgJUrbs66mcLA2xWTs+ofV5Ivo52GeLT6QZkB8K8ao5QX7e2jciFoBD8GzWqAyQkbrkYn2mawBv4gTcOk9pOp2cAxgvr7Juz+0n3ITpIM9Y2+Xd/6q2sNckDZVCWrElPNBqgigavNkaj32OvccW0FCPjiW5OqjLQAwhAk+BBUdmrQa4dDEQayZ3ApHOu8EMoKYPNbrIjt4StludsyHShfy6uMe8V0EmGb2rhJTfxnw452mfuTIob4U8EoEqhodeongNpmLDjhwca67WqaHO3QQIOjjIV0KLVOjznaSJEVf+DDyi+42MvT3s30Qh3t59XYyFE+MQ42Fsa59EdJw0ZV953dPHaygm+8aAPlktP42yrpe9jn/FyznhO9hccpMlXS3yPJouh2/DdezhGiaDt9BevQyorGYKt/BpZsyY4Wl6Y8f67tiOBGLR//4Z4RubjQ/YYahHu7p0nwqpKx6Dsf1Z/ISuSIPwnZqltv50=
+    secure: $SLACK_TOKEN
