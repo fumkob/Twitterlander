@@ -21,11 +21,11 @@ or alternatively using `brew install fastlane`
 fastlane ios tests
 ```
 Test
-### ios dg
+### ios deploy_app
 ```
-fastlane ios dg
+fastlane ios deploy_app
 ```
-Upload to deploygate
+Release on deploygate
 
 ----
 
