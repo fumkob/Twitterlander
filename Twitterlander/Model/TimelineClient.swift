@@ -11,12 +11,28 @@ import SwiftyJSON
 import RxSwift
 
 public class TimelineClient {
-
-    public func getTimeline(with client: OAuthClient) -> Single<[Timeline]> {
-        guard let url = URL(string: "https://api.twitter.com/1.1/statuses/home_timeline.json") else {
-            fatalError("invalid url")
-        }
-        
-        return client.getAPIRequestResult(of: url).map { $0.map { Timeline(homeData: $0.1) } }
+    
+    public enum Error: Swift.Error {
+        case decodeError
+        case oauthClientError(APIError)
     }
+    
+    public func getTimeline(with client: OAuthClient, url: URL) -> Single<[Timeline]> {
+  
+        return client.getAPIRequestResult(of: url)
+            .catchError { error in
+                guard let error = error as? APIError else { throw APIError.unknown }
+                switch error {
+                case .decodeError: throw  Error.decodeError
+                default: throw Error.oauthClientError(error)
+                }
+            }
+            .map { jsons in
+                return try jsons.map { (_, json) -> Timeline in
+                    guard let timeline = Timeline(homeData: json) else { throw Error.decodeError }
+                    return timeline
+                }
+        }
+    }
+    
 }

@@ -28,9 +28,12 @@ open class HomeViewModel {
     open func requestHomeTimeline() {
         
         disposeBag = DisposeBag()
+        guard let url = URL(string: "https://api.twitter.com/1.1/statuses/home_timeline.json") else {
+            fatalError("invalid url")
+        }
         //API通信
         DispatchQueue.global(qos: .background).async {
-            self.homeTimelineClient.getTimeline(with: OAuthClient())
+            self.homeTimelineClient.getTimeline(with: OAuthClient(), url: url)
                 .subscribe(onSuccess: { [weak self] response in
                     self?.homeTimelineArrayEvent.onNext(response)
                     }, onError: { error in

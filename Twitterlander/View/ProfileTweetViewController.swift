@@ -21,15 +21,13 @@ class ProfileTweetViewController: UIViewController {
         super.viewDidLoad()
         print("ProfileTweet ViewDidLoad")
 
-//        tableSetup()
-//        tableViewCellTapped()
-//        transitionToTweetDetail()
-//        transitionToProfile()
-//        heightSetup()
+        tableSetup()
+        tableViewCellTapped()
+        heightSetup()
     }
     
     private func profileTweetViewSetup(screenName: String) {
-        self.profileTweetViewModel = ProfileTweetViewModel(client: TimelineClient())
+        self.profileTweetViewModel = ProfileTweetViewModel(client: TimelineClient(), screenName: screenName)
     }
     
     private func tableSetup() {
@@ -53,12 +51,13 @@ class ProfileTweetViewController: UIViewController {
         }
         .disposed(by: disposeBag)
     }
+    
     //セルタップ時処理
     private func tableViewCellTapped() {
         Observable
             .zip(tableView.rx.itemSelected, tableView.rx.modelSelected(Timeline.self))
             .subscribe(onNext: { [weak self] indexPath, data in
-                self?.profileTweetViewModel.transitionProcessToTweetDetail(homeTimeline: data)
+                self?.transitionToTweetDetail(data: data)
                 //選択解除
                 self?.tableView.deselectRow(at: indexPath, animated: true)
             })
@@ -71,34 +70,11 @@ class ProfileTweetViewController: UIViewController {
         cell.profileImage.addGestureRecognizer(tapGesture)
         tapGesture.rx.event
             .subscribe(onNext: {[weak self] _ in
-                self?.profileTweetViewModel.transitionProcessToProfile(userTimeline: data)
+                self?.transitionToProfile(data: data)
             })
             .disposed(by: disposeBag)
     }
-    //ツイート詳細遷移
-    private func transitionToTweetDetail() {
-        profileTweetViewModel.tweetDetailData
-            .drive(onNext: {[weak self] tweetDetailData in
-                let tweetDetailStoryboard = UIStoryboard(name: "TweetDetail", bundle: nil)
-                guard let tweetDetailViewController = tweetDetailStoryboard.instantiateViewController(withIdentifier: "tweetDetail") as? TweetDetailViewController else {
-                    fatalError("Storyboard named \"TweetDetail\" does NOT exists.")
-                }
-                tweetDetailViewController.tweetDetailData = tweetDetailData
-                self?.navigationController?.pushViewController(tweetDetailViewController, animated: true)
-
-            })
-            .disposed(by: disposeBag)
-    }
-    //プロフィール画面遷移
-    private func transitionToProfile() {
-        profileTweetViewModel.screenName
-            .drive(onNext: {[weak self] screenName in
-                let profileViewController = ProfileViewController.makeInstance(screenName: screenName)
-                self?.navigationController?.pushViewController(profileViewController, animated: true)
-            })
-        .disposed(by: disposeBag)
-        
-    }
+    
     private func heightSetup() {
         //テーブル高さ設定
         tableView.rx.observe(CGSize.self, "contentSize")
@@ -108,6 +84,39 @@ class ProfileTweetViewController: UIViewController {
                 }
             })
             .disposed(by: disposeBag)
+    }
+    
+    //ツイート詳細遷移
+    private func transitionToTweetDetail(data: Timeline) {
+        var tweetDetailData: TweetDetailData!
+        switch data.retweetedStatus {
+        case true:
+            tweetDetailData = TweetDetailData(retweet: data)
+        case false:
+            tweetDetailData = TweetDetailData(normalTweet: data)
+        }
+        let tweetDetailStoryboard = UIStoryboard(name: "TweetDetail", bundle: nil)
+        guard let tweetDetailViewController = tweetDetailStoryboard.instantiateViewController(withIdentifier: "tweetDetail") as? TweetDetailViewController else {
+            fatalError("Storyboard named \"TweetDetail\" does NOT exists.")
+        }
+        tweetDetailViewController.tweetDetailData = tweetDetailData
+        navigationController?.pushViewController(tweetDetailViewController, animated: true)
+    }
+    //プロフィール画面遷移
+    private func transitionToProfile(data: Timeline) {
+        var screenName: String = ""
+        switch data.retweetedStatus {
+        case true:
+            guard let retweetedScreenName = data.retweetedScreenName else {
+                fatalError("retweetedScreenName is nil")
+            }
+            screenName = retweetedScreenName
+        case false:
+            screenName = data.screenName
+        }
+        let profileViewController = ProfileViewController.makeInstance(screenName: screenName)
+        navigationController?.pushViewController(profileViewController, animated: true)
+        
     }
 }
 

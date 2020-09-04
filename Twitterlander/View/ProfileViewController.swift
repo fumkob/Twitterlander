@@ -52,10 +52,6 @@ class ProfileViewController: UIViewController, SwipeBackable {
         profileContentsViewSetup(controller: profileContentsViewController)
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        ProfileViewInfo.shared.receiveScreenName.onNext(screenName)
-    }
-    
     //ViewModel設定
     private func profileViewSetup() {
         profileViewModel = ProfileViewModel(client: ProfileClient(), screenName: screenName)

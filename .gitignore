@@ -89,6 +89,13 @@ fastlane/test_output
 
 iOSInjectionProject/
 
-#Bundler
+# Bundler
 .bundle
 vendor/
+
+# local_test
+deploy_execution.sh
+
+# SSH Key
+deploy_key
+deploy_key.pub
