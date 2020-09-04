@@ -3,8 +3,10 @@ PODS:
   - Kingfisher (5.14.1):
     - Kingfisher/Core (= 5.14.1)
   - Kingfisher/Core (5.14.1)
+  - Nimble (8.1.1)
   - OAuthSwift (2.0.0)
   - Pageboy (3.6.1)
+  - Quick (3.0.0)
   - RxBlocking (5.1.1):
     - RxSwift (~> 5)
   - RxCocoa (5.1.1):
@@ -23,7 +25,9 @@ PODS:
 DEPENDENCIES:
   - Alamofire (~> 5.2)
   - Kingfisher (~> 5.0)
+  - Nimble (~> 8.1)
   - OAuthSwift (~> 2.0.0)
+  - Quick (~> 3.0)
   - RxBlocking (~> 5)
   - RxCocoa (~> 5)
   - RxSwift (~> 5)
@@ -36,8 +40,10 @@ SPEC REPOS:
   trunk:
     - Alamofire
     - Kingfisher
+    - Nimble
     - OAuthSwift
     - Pageboy
+    - Quick
     - RxBlocking
     - RxCocoa
     - RxRelay
@@ -50,8 +56,10 @@ SPEC REPOS:
 SPEC CHECKSUMS:
   Alamofire: e911732990610fe89af59ac0077f923d72dc3dfd
   Kingfisher: 8050bc6f7f68cbf3908bd04df7ccbac188f6d6d6
+  Nimble: 5f8a2fb6fa343a7242dfdd9d42f7267419d464b2
   OAuthSwift: 6805456763cf1c7ae0c16765257ed430b7aacae7
   Pageboy: 29a2d474ad99404b4d77f325e0ab6d705930a4fb
+  Quick: 6d9559f40647bc4d510103842ef2fdd882d753e2
   RxBlocking: 5f700a78cad61ce253ebd37c9a39b5ccc76477b4
   RxCocoa: 32065309a38d29b5b0db858819b5bf9ef038b601
   RxRelay: d77f7d771495f43c556cbc43eebd1bb54d01e8e9
@@ -61,6 +69,6 @@ SPEC CHECKSUMS:
   SwiftyJSON: 6faa0040f8b59dead0ee07436cbf76b73c08fd08
   Tabman: 085d89c65be9e883629bdaf5b1453a6397e57846
 
-PODFILE CHECKSUM: 1440fbb36327a33f60b3138be3ad902f85522b70
+PODFILE CHECKSUM: b77e4490483f9e185fd0602fbc2a492292c272ee
 
 COCOAPODS: 1.9.3

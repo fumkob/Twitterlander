@@ -9,6 +9,9 @@
 import XCTest
 import RxSwift
 import SwiftyJSON
+import Quick
+import Nimble
+
 @testable import Twitterlander
 
 class TimelineClientTests: XCTestCase {
@@ -22,12 +25,13 @@ class TimelineClientTests: XCTestCase {
     }
 
     func testExample() throws {
-        let oauthClientMock = OAuthClientMockFactory2.emptyOAuthClient()
+        let oauthClientMock = OAuthClientMockFactory.dummyFileOAuthClient()
         let timelineClient = TimelineClient()
+        let url = URL(string: "http://")!
         
         let exp = self.expectation(description: "Do not call")
         
-        timelineClient.getTimeline(with: oauthClientMock)
+        timelineClient.getTimeline(with: oauthClientMock, url: url)
             .subscribe(onSuccess: { response in
                 XCTAssertEqual(response[0].screenName, "Kanonnyanko")
                 exp.fulfill()
@@ -39,17 +43,91 @@ class TimelineClientTests: XCTestCase {
         }
     }
     
-
     func testPerformanceExample() throws {
         // This is an example of a performance test case.
         self.measure {
             // Put the code you want to measure the time of here.
         }
     }
-
 }
 
-class OAuthClientMockFactory2 {
+class TimelineClientTests2: QuickSpec {
+    override func spec() {
+        describe("Timeline client") {
+            it("can fetch user_timeline from API") {
+                let oauthClientMock = OAuthClientMockFactory.dummyFileOAuthClient()
+                let timelineClient = TimelineClient()
+                let url = URL(string: "http://")!
+                
+                let exp = self.expectation(description: "Do not call")
+                
+                timelineClient.getTimeline(with: oauthClientMock, url: url)
+                    .subscribe(onSuccess: {response in
+                        expect(response[0].screenName) == "Kanonnyanko"
+                        exp.fulfill()
+                    })
+                switch XCTWaiter.wait(for: [exp], timeout: 2.0) {
+                case .completed: break
+                case .timedOut: fail("timeout")
+                default: fail("uncompleted")
+                }
+            }
+        }
+        
+        describe("Timeline client") {
+            it("throws wrongsetting error when url is not correct") {
+                let oauthClientMock = OAuthClientMockFactory.errorOAuthClient()
+                let timelineClient = TimelineClient()
+                let url = URL(string: "http://")!
+                
+                let exp = self.expectation(description: "Do not call")
+                
+                timelineClient.getTimeline(with: oauthClientMock, url: url)
+                    .subscribe(onError: {error in
+                        guard let error = error as? TimelineClient.Error else {
+                            fail("unexepected error"); return
+                        }
+                            switch error {
+                            case .oauthClientError(.wrongSetting): break
+                            default: fail("unexepected error")
+                            }
+                        exp.fulfill()
+                    })
+                switch XCTWaiter.wait(for: [exp], timeout: 2.0) {
+                case .completed: break
+                case .timedOut: fail("timeout")
+                default: fail("uncompleted")
+                }
+            }
+            
+            it("throws decode error when server return unknown response") {
+                let oauthClientMock = OAuthClientMockFactory.emptyOAuthClient()
+                let timelineClient = TimelineClient()
+                let url = URL(string: "http://")!
+                
+                let exp = self.expectation(description: "Do not call")
+                
+                timelineClient.getTimeline(with: oauthClientMock, url: url)
+                    .subscribe(onError: {error in
+                        guard let error = error as? TimelineClient.Error else {fail("unexepected error"); return}
+                        switch error {
+                        case .decodeError: break
+                        default: fail("unexepected error")
+                        }
+                        exp.fulfill()
+                    })
+                switch XCTWaiter.wait(for: [exp], timeout: 2.0) {
+                case .completed: break
+                case .timedOut: fail("timeout")
+                default: fail("uncompleted")
+                }
+            }
+            
+        }
+    }
+}
+
+class OAuthClientMockFactory {
     class OAuthClientMock: OAuthClient {
         override func getAPIRequestResult(of url: URL) -> Single<JSON> {
             return .create(subscribe : {observer in
@@ -63,10 +141,39 @@ class OAuthClientMockFactory2 {
         }
         
     }
-    static func emptyOAuthClient() -> OAuthClient {
+    
+    class OAuthClientEmptyResponseMock: OAuthClient {
+        override func getAPIRequestResult(of url: URL) -> Single<JSON> {
+            return .create(subscribe : {observer in
+                observer(.success(JSON(parseJSON: "{\"hoge\":1}")))
+                return Disposables.create()
+            })
+        }
+    }
+    
+    class OAuthClientErrorMock: OAuthClient {
+        override func getAPIRequestResult(of url: URL) -> Single<JSON> {
+            return .create(subscribe : {observer in
+                observer(.error(APIError.wrongSetting))
+                return Disposables.create()
+            })
+        }
+    }
+    
+    static func dummyFileOAuthClient() -> OAuthClient {
         return OAuthClientMock()
     }
+
+    static func emptyOAuthClient() -> OAuthClient {
+        return OAuthClientEmptyResponseMock()
+    }
+ 
+    static func errorOAuthClient() -> OAuthClient {
+        return OAuthClientErrorMock()
+    }
 }
+
+/*
 let jsonString2 = """
 [
     {"age" : 12},
@@ -316,3 +423,4 @@ let jsonString3 = """
     }
 ]
 """
+*/

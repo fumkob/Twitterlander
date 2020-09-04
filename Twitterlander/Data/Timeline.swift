@@ -57,29 +57,16 @@ public struct Timeline {
 
 extension Timeline {
     //Cyclomatic Complexityでエラーが発生するため代替案の検討が必要
-    init(homeData: JSON) {
+    init?(homeData: JSON) {
         //ツイート情報
-        guard let name = homeData["user"]["name"].string else {
-            fatalError("name is missing")
-        }
-        guard let screenName = homeData["user"]["screen_name"].string else {
-            fatalError("screen_name is missing")
-        }
-        guard let profileImageUrl = homeData["user"]["profile_image_url_https"].string else {
-            fatalError("profile_image_url_httpsis missing")
-        }
-        guard let text = homeData["text"].string else {
-            fatalError("text missing")
-        }
-        guard let idStr = homeData["id_str"].string else {
-            fatalError("id_str missing")
-        }
-        guard let createdAt = homeData["created_at"].string else {
-            fatalError("created_at missing")
-        }
-        guard let createdAtFormatted = Date(fromISO8601: createdAt) else {
-            fatalError("createdAt can not be formatted")
-        }
+        guard let name = homeData["user"]["name"].string else { return nil }
+        guard let screenName = homeData["user"]["screen_name"].string  else { return nil }
+        guard let profileImageUrl = homeData["user"]["profile_image_url_https"].string  else { return nil }
+        guard let text = homeData["text"].string  else { return nil }
+        guard let idStr = homeData["id_str"].string else { return nil }
+        guard let createdAt = homeData["created_at"].string else { return nil }
+        guard let createdAtFormatted = Date(fromISO8601: createdAt) else { return nil }
+
         self.name = name
         self.screenName = screenName
         self.profileImageUrl = profileImageUrl
@@ -219,24 +206,12 @@ extension Timeline {
         }
         
         //一般情報
-        guard let retweetCount = homeData["retweet_count"].int else {
-            fatalError("retweet_count is missing")
-        }
-        guard let favoriteCount = homeData["favorite_count"].int else {
-            fatalError("favorite_count is missing")
-        }
-        guard let isRetweeted = homeData["retweeted"].bool else {
-            fatalError("retweeted is missing")
-        }
-        guard let isFavorited = homeData["favorited"].bool else {
-            fatalError("favorited is missing")
-        }
-        guard let verified = homeData["user"]["verified"].bool else {
-            fatalError("verified is missing")
-        }
-        guard let source = homeData["source"].string else {
-            fatalError("source is missing")
-        }
+        guard let retweetCount = homeData["retweet_count"].int else { return nil }
+        guard let favoriteCount = homeData["favorite_count"].int else { return nil }
+        guard let isRetweeted = homeData["retweeted"].bool else { return nil }
+        guard let isFavorited = homeData["favorited"].bool else { return nil }
+        guard let verified = homeData["user"]["verified"].bool else { return nil }
+        guard let source = homeData["source"].string else { return nil }
         
         self.retweetCount = retweetCount
         self.favoriteCount = favoriteCount
