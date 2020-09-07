@@ -41,4 +41,10 @@ public class LoginViewModel {
             })
         .disposed(by: disposeBag)
     }
+    
+    //Tokenを削除
+    public func deleteToken() {
+        userDefaults.removeObject(forKey: "token")
+        transitionToHomeEvent.onNext(false)
+    }
 }

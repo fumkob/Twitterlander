@@ -15,8 +15,10 @@ class HomeViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var plusButtonImage: UIImageView!
     private var reloadButton: UIBarButtonItem!
+    private var logoutButton: UIBarButtonItem!
     
     private var disposeBag = DisposeBag()
+    public weak var delegate: HomeViewControllerDelegate?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -25,6 +27,10 @@ class HomeViewController: UIViewController {
         navigationBarSetup()
         tableViewCellTapped()
         plusButtonImageTapped()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        self.navigationController!.navigationBar.tintColor = .black
     }
     
     private func homeViewSetup() {
@@ -56,13 +62,20 @@ class HomeViewController: UIViewController {
     //ナビゲーションバー設定
     private func navigationBarSetup() {
         self.navigationItem.title = "Home"
-        self.navigationController!.navigationBar.tintColor = .black
         reloadButton = UIBarButtonItem(barButtonSystemItem: .refresh, target: self, action: nil)
         self.navigationItem.rightBarButtonItems = [reloadButton]
-        
+        logoutButton = UIBarButtonItem(title: "ログアウト", style: .plain, target: self, action: nil)
+        self.navigationItem.leftBarButtonItems = [logoutButton]
+
         reloadButton.rx.tap
             .subscribe(onNext: {[weak self] in
                 self?.homeViewModel.requestHomeTimeline()
+            })
+            .disposed(by: disposeBag)
+        
+        logoutButton.rx.tap
+            .subscribe(onNext: {[unowned self] in
+                self.delegate?.dissmissHomeView(self)
             })
             .disposed(by: disposeBag)
     }
@@ -147,4 +160,8 @@ extension HomeViewController: CreateTweetViewControllerDelegate {
         dismiss(animated: true, completion: nil)
         homeViewModel.requestHomeTimeline()
     }
+}
+
+protocol HomeViewControllerDelegate: class {
+    func dissmissHomeView(_ viewController: HomeViewController)
 }
