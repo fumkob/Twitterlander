@@ -62,7 +62,6 @@ open class OAuthClient {
                     guard let data = jsonData else {
                         fatalError("response could not be converted to JSON")
                     }
-                    let json = JSON(data)
                     observer(.success(JSON(data)))
                 case .failure(.serverError): observer(.error(APIError.serverError))
                 case .failure(.accessDenied): observer(.error(APIError.unauthorized))

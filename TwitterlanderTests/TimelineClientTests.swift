@@ -134,7 +134,7 @@ class OAuthClientMockFactory {
 //                guard let data = jsonString.data(using: .utf8) else { return Disposables.create() }
 //                guard let json = try? JSON.init(data: data, options: .fragmentsAllowed) else { return Disposables.create() }
                 // swiftlint:disable force_try
-                let url = URL(fileURLWithPath: "/Users/fumiaki/Documents/Training/Twitterlander/Twitterlander/Twitterlander/TestGround/JsonTest.playground/Resources/sample.json")
+                let url = URL(fileURLWithPath: "sample.json", relativeTo: URL(fileURLWithPath: #file).deletingLastPathComponent())
                 observer(.success(try! JSON.init(data: try! Data(contentsOf: url))))
                 return Disposables.create()
             })
