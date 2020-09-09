@@ -10,7 +10,7 @@ disabled_rules:
  
 line_length: 300
 cyclomatic_complexity:
-  warning: 10
+  warning: 20
   error: 50
 function_body_length:
   warning: 100

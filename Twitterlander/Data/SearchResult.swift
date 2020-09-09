@@ -28,26 +28,14 @@ public struct SearchResult {
 }
 
 public extension SearchResult {
-    init(searchData: JSON) {
+    init?(searchData: JSON) {
         //ツイート情報
-        guard let name = searchData["user"]["name"].string else {
-            fatalError("name is missing")
-        }
-        guard let screenName = searchData["user"]["screen_name"].string else {
-            fatalError("screen_name is missing")
-        }
-        guard let profileImageUrl = searchData["user"]["profile_image_url_https"].string else {
-            fatalError("profile_image_url_httpsis missing")
-        }
-        guard let text = searchData["text"].string else {
-            fatalError("text missing")
-        }
-        guard let createdAt = searchData["created_at"].string else {
-            fatalError("created_at missing")
-        }
-        guard let createdAtFormatted = Date(fromISO8601: createdAt) else {
-            fatalError("createdAt can not be formatted")
-        }
+        guard let name = searchData["user"]["name"].string else { return nil }
+        guard let screenName = searchData["user"]["screen_name"].string else { return nil }
+        guard let profileImageUrl = searchData["user"]["profile_image_url_https"].string else { return nil }
+        guard let text = searchData["text"].string else { return nil }
+        guard let createdAt = searchData["created_at"].string else { return nil }
+        guard let createdAtFormatted = Date(fromISO8601: createdAt) else { return nil }
         self.name = name
         self.screenName = screenName
         self.profileImageUrl = profileImageUrl
@@ -74,24 +62,12 @@ public extension SearchResult {
             self.mediaType = nil
         }
         //一般情報
-        guard let retweetCount = searchData["retweet_count"].int else {
-            fatalError("retweet_count is missing")
-        }
-        guard let favoriteCount = searchData["favorite_count"].int else {
-            fatalError("favorite_count is missing")
-        }
-        guard let isRetweeted = searchData["retweeted"].bool else {
-            fatalError("retweeted is missing")
-        }
-        guard let isFavorited = searchData["favorited"].bool else {
-            fatalError("favorited is missing")
-        }
-        guard let verified = searchData["user"]["verified"].bool else {
-            fatalError("verified is missing")
-        }
-        guard let source = searchData["source"].string else {
-            fatalError("source is missing")
-        }
+        guard let retweetCount = searchData["retweet_count"].int else { return nil }
+        guard let favoriteCount = searchData["favorite_count"].int else { return nil }
+        guard let isRetweeted = searchData["retweeted"].bool else { return nil }
+        guard let isFavorited = searchData["favorited"].bool else { return nil }
+        guard let verified = searchData["user"]["verified"].bool else { return nil }
+        guard let source = searchData["source"].string else { return nil }
         
         self.retweetCount = retweetCount
         self.favoriteCount = favoriteCount
