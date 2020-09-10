@@ -40,7 +40,7 @@
 
 ![ViewConcept](docs/images/ViewConcept.jpg)
 
-## 構成案
+## アーキテクチャ
 
 ![Architecture](docs/images/Architecture.png)
 
