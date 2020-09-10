@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097.2" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
@@ -227,7 +227,7 @@
                                         </connections>
                                     </containerView>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="34W-hk-ARt">
-                                        <rect key="frame" x="0.0" y="13" width="414" height="69"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="414" height="69"/>
                                     </imageView>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8US-Dr-cg8" userLabel="Profile Image View">
                                         <rect key="frame" x="20" y="49" width="60" height="60"/>
@@ -237,7 +237,7 @@
                                         </constraints>
                                     </view>
                                     <imageView clipsSubviews="YES" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="K1b-1j-OqY" customClass="CircleImageView" customModule="Twitterlander" customModuleProvider="target">
-                                        <rect key="frame" x="24" y="57" width="52" height="52"/>
+                                        <rect key="frame" x="20" y="49" width="60" height="60"/>
                                         <gestureRecognizers/>
                                         <constraints>
                                             <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="35" id="jlb-bS-rw5"/>
@@ -246,7 +246,7 @@
                                         </constraints>
                                     </imageView>
                                     <visualEffectView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="sJc-jX-VT1">
-                                        <rect key="frame" x="0.0" y="13" width="414" height="69"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="414" height="69"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="3la-0N-Sh1">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="69"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -254,7 +254,7 @@
                                         <blurEffect style="regular"/>
                                     </visualEffectView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SCh-BB-bPq" userLabel="UserName">
-                                        <rect key="frame" x="185" y="51.5" width="44.5" height="20.5"/>
+                                        <rect key="frame" x="185" y="38.5" width="44.5" height="20.5"/>
                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
@@ -315,6 +315,7 @@
                     </view>
                     <connections>
                         <outlet property="beginDateLabel" destination="jrB-Vs-mKS" id="caR-Nd-Cis"/>
+                        <outlet property="containerView" destination="eJC-q4-gwO" id="rA8-dW-jEp"/>
                         <outlet property="containerViewHeight" destination="1s9-bP-Qep" id="uFm-uo-pK3"/>
                         <outlet property="descriptionLabel" destination="ucx-3k-ieK" id="LCy-3a-qsV"/>
                         <outlet property="followButton" destination="s1M-kq-wHX" id="RSr-Pl-dd2"/>
@@ -341,10 +342,10 @@
             </objects>
             <point key="canvasLocation" x="-14.492753623188406" y="218.97321428571428"/>
         </scene>
-        <!--Profile Contents View Controller-->
+        <!--View Controller-->
         <scene sceneID="Ti6-K8-YId">
             <objects>
-                <viewController storyboardIdentifier="profileContents" id="wav-hD-jXJ" customClass="ProfileContentsViewController" customModule="Twitterlander" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="profileContents" id="wav-hD-jXJ" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="aJy-8G-8MZ">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="1000"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

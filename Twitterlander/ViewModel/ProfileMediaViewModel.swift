@@ -13,6 +13,7 @@ open class ProfileMediaViewModel {
     private let timelineClient: TimelineClient
     private var disposeBag = DisposeBag()
     private let userDefaults = UserDefaults.standard
+    private let screenName: String
     //APIデータ用
     private let mediaUrlArrayEvent = PublishSubject<[URL?]>()
     open var mediaUrlArray: Driver<[URL?]> {return mediaUrlArrayEvent.asDriver(onErrorDriveWith: .empty())}
@@ -20,29 +21,19 @@ open class ProfileMediaViewModel {
     //遷移用
     private let mediaUrlTransitionEvent = PublishSubject<[URL?]>()
     open var mediaUrlTransition: Driver<[URL?]> {return mediaUrlTransitionEvent.asDriver(onErrorDriveWith: .empty())}
-    //取得用スクリーン名
-    private var givenScreenName: String = ""
     
-    init(client: TimelineClient) {
+    init(client: TimelineClient, screenName: String) {
         self.timelineClient = client
+        self.screenName = screenName
     }
     
     open func requestMediaInfo() {
-        disposeBag = DisposeBag()
         
-        ProfileViewInfo.shared.sendScreenName
-            .subscribe(onNext: { name in
-                self.givenScreenName = name
-            })
-            .disposed(by: disposeBag)
+        let url = userTimelineUrlGenerator(screenName: screenName)
         
-        let url = userTimelineUrlGenerator(screenName: givenScreenName)
-        guard let token = userDefaults.dictionary(forKey: "token") as? [String:String] else {
-            fatalError("token is nil")
-        }
         //API通信
         DispatchQueue.global(qos: .background).async {
-            self.timelineClient.getTimeline(url: url, token: token)
+            self.timelineClient.getTimeline(with: OAuthClient(), url: url)
                 .subscribe(onSuccess: { [unowned self] response in
                     let urls = self.mediaUrlGenerator(response: response)
                     self.mediaUrlArrayEvent.onNext(urls)
@@ -54,13 +45,16 @@ open class ProfileMediaViewModel {
         }
         
     }
-    open func userTimelineUrlGenerator(screenName: String) -> String {
+    open func userTimelineUrlGenerator(screenName: String) -> URL {
         let baseUrl = "https://api.twitter.com/1.1/statuses/user_timeline.json"
         let name = "screen_name=" + screenName
         let count = "count=200"
         let replies = "exclude_replies=true"
         let urlString = baseUrl + "?" + name + "&" + count + "&" + replies
-        return urlString
+        guard let url = URL(string: urlString) else {
+            fatalError("Invalid url")
+        }
+        return url
     }
     open func mediaUrlGenerator(response: [Timeline]) -> [URL?] {
         let filteredResponse = response.filter({!$0.isRetweeted})

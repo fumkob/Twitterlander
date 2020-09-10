@@ -13,10 +13,12 @@ import RxSwift
 import RxCocoa
 
 class ProfileContentsViewController: TabmanViewController {
+    public var screenName: String!
+    
     private lazy var viewControllers: [UIViewController] = {
         [
-            UIStoryboard(name: "ProfileTweet", bundle: nil).instantiateViewController(withIdentifier: "profileTweet"),
-            UIStoryboard(name: "ProfileMedia", bundle: nil).instantiateViewController(withIdentifier: "profileMedia")
+            ProfileTweetViewController.makeInstance(screenName: screenName),
+            ProfileMediaViewController.makeInstance(screenName: screenName)
         ]
     }()
     
@@ -72,5 +74,16 @@ extension ProfileContentsViewController: PageboyViewControllerDataSource, TMBarD
     
     func defaultPage(for pageboyViewController: PageboyViewController) -> PageboyViewController.Page? {
         return nil
+    }
+}
+
+extension ProfileContentsViewController {
+    static func makeInstance(screenName: String) -> ProfileContentsViewController {
+        let storyboard = UIStoryboard(name: "ProfileContents", bundle: nil)
+        guard let controller = storyboard.instantiateViewController(withIdentifier: "profileContents") as? ProfileContentsViewController else {
+            fatalError("Storyboard named \"Profile\" does NOT exists.")
+        }
+        controller.screenName = screenName
+        return controller
     }
 }

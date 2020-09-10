@@ -20,6 +20,9 @@ target 'Twitterlander' do
     # Pods for testing
     pod 'RxBlocking', '~> 5'
     pod 'RxTest', '~> 5'
+    pod 'Quick', '~> 3.0'
+    pod 'Nimble', '~> 8.1'
+    
   end
 
   target 'TwitterlanderUITests' do

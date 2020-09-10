@@ -11,8 +11,7 @@ import SwiftyJSON
 import RxSwift
 
 public class CreateTweetClient {
-    private var oauthswift: OAuthSwift?
-    
+    private var oauthswift: OAuthSwift?    
     public func postTweet(url: String, token: [String:String]) -> Single<JSON> {
         return .create {observer in
             let oauthswift = OAuth1Swift(

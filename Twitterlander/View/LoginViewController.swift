@@ -48,9 +48,21 @@ class LoginViewController: UIViewController {
                     guard let navigationController = homeStoryboard.instantiateViewController(withIdentifier: "navigation") as? UINavigationController else {
                         fatalError("Storyboard named \"Home\" does NOT exists.")
                     }
+                    guard let homeViewController = navigationController.topViewController as? HomeViewController else {
+                        fatalError("Home View Controller is not topViewController")
+                    }
+                    homeViewController.delegate = self
                     self?.present(navigationController, animated: true, completion: nil)
                 }
             })
             .disposed(by: disposeBag)
+    }
+}
+
+//Logout時dismiss処理
+extension LoginViewController: HomeViewControllerDelegate {
+    public func dissmissHomeView(_ viewController: HomeViewController) {
+        loginViewModel.deleteToken()
+        dismiss(animated: true, completion: nil)
     }
 }

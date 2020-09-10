@@ -21,7 +21,6 @@ class ProfileMediaViewController: UIViewController {
         print("ProfileMedia ViewDidLoad")
         mediaCollectionView.delegate = self
         
-        profileMediaViewSetup()
         mediaSetup()
         heightSetup()
         transitionToMediaDetail()
@@ -29,8 +28,8 @@ class ProfileMediaViewController: UIViewController {
     }
     
     //View Modelセット
-    private func profileMediaViewSetup() {
-        self.profileMediaViewModel = ProfileMediaViewModel(client: TimelineClient())
+    private func profileMediaViewSetup(screenName: String) {
+        self.profileMediaViewModel = ProfileMediaViewModel(client: TimelineClient(), screenName: screenName)
     }
     //画像セット
     private func mediaSetup() {
@@ -81,5 +80,13 @@ extension ProfileMediaViewController: UICollectionViewDelegateFlowLayout {
         let cellSize:CGFloat = self.view.bounds.width/3 - 1
         // 正方形で返すためにwidth,heightを同じにする
         return CGSize(width: cellSize, height: cellSize)
+    }
+}
+
+extension ProfileMediaViewController {
+    static func makeInstance(screenName: String) -> ProfileMediaViewController {
+        guard let controller = UIStoryboard(name: "ProfileMedia", bundle: nil).instantiateViewController(withIdentifier: "profileMedia") as? ProfileMediaViewController else {fatalError("invalid controller")}
+        controller.profileMediaViewSetup(screenName: screenName)
+        return controller
     }
 }

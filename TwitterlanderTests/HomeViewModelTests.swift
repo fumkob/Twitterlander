@@ -27,16 +27,16 @@ class HomeViewModelTests: XCTestCase {
 */
 }
 
-class TimelineClientMockFactory {
-    class TimelineClientMock: TimelineClient {
-        override func getTimeline(url: String, token: [String : String]) -> Single<[Timeline]> {
-            return .create(subscribe : {observer in
-                observer(.success([]))
-                return Disposables.create()
-            })
-        }
-    }
-    static func emptyTimelineClient() -> TimelineClient {
-        return TimelineClientMock()
-    }
-}
+//class TimelineClientMockFactory {
+//    class TimelineClientMock: TimelineClient {
+//        override func getTimeline(url: String, token: [String : String]) -> Single<[Timeline]> {
+//            return .create(subscribe : {observer in
+//                observer(.success([]))
+//                return Disposables.create()
+//            })
+//        }
+//    }
+//    static func emptyTimelineClient() -> TimelineClient {
+//        return TimelineClientMock()
+//    }
+//}

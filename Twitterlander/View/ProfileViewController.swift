@@ -34,10 +34,12 @@ class ProfileViewController: UIViewController, SwipeBackable {
     @IBOutlet weak var followNumberLabel: UILabel!
     @IBOutlet weak var followerNumberLabel: UILabel!
     @IBOutlet weak var containerViewHeight: NSLayoutConstraint!
+    @IBOutlet weak var containerView: UIView!
     
+    public var profileContentsViewController: ProfileContentsViewController!
     private var profileViewModel: ProfileViewModel!
     private let disposeBag = DisposeBag()
-    public var screenName: String!
+    private var screenName: String!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -47,15 +49,12 @@ class ProfileViewController: UIViewController, SwipeBackable {
         navigationBarSetup()
         profileSetup()
         viewHeightSetup()
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        ProfileViewInfo.shared.receiveScreenName.onNext(screenName)
+        profileContentsViewSetup(controller: profileContentsViewController)
     }
     
     //ViewModel設定
     private func profileViewSetup() {
-        profileViewModel = ProfileViewModel(client: ProfileClient())
+        profileViewModel = ProfileViewModel(client: ProfileClient(), screenName: screenName)
     }
     //ナビゲーションバー設定
     private func navigationBarSetup() {
@@ -162,5 +161,26 @@ class ProfileViewController: UIViewController, SwipeBackable {
             alpha = 0
         }
         return alpha
+    }
+    
+    //ProfileContentsViewセットアップ
+    private func profileContentsViewSetup(controller: ProfileContentsViewController) {
+        addChild(controller)
+        controller.view.frame = containerView.bounds
+        containerView.addSubview(controller.view)
+        controller.didMove(toParent: self)
+    }
+}
+
+extension ProfileViewController {
+    static func makeInstance(screenName:String) -> ProfileViewController {
+        let storyboard = UIStoryboard(name: "Profile", bundle: nil)
+        guard let controller = storyboard.instantiateViewController(withIdentifier: "profile") as? ProfileViewController else {
+            fatalError("Storyboard named \"Profile\" does NOT exists.")
+        }
+        let profileContentsViewController = ProfileContentsViewController.makeInstance(screenName: screenName)
+        controller.screenName = screenName
+        controller.profileContentsViewController = profileContentsViewController
+        return controller
     }
 }

@@ -9,9 +9,11 @@
 import Foundation
 
 public enum APIError: Error {
-    case getOAuthError
-    case getHomeTimelineError
-    case getSearchResultError
-    case getProfileError
     case postCreateTweetError
+    case wrongSetting
+    case decodeError
+    case serverError
+    case unauthorized
+    case requestError(Error, URLRequest?)
+    case unknown
 }

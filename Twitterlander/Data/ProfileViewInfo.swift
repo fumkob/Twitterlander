@@ -26,12 +26,6 @@ class ProfileViewInfo {
     private let sendHeightStream = PublishSubject<CGFloat>()
     public var sendHeight: Observable<CGFloat> {return sendHeightStream.asObservable()}
     
-    private let receiveScreenNameStream = PublishSubject<String>()
-    public var receiveScreenName: AnyObserver<String> { return receiveScreenNameStream.asObserver()}
-    
-    private let sendScreenNameStream = BehaviorSubject<String>(value: "")
-    public var sendScreenName: Observable<String> {return sendScreenNameStream.asObservable()}
-    
     private let receiveRowStream = PublishSubject<Int>()
     public var receiveRow: AnyObserver<Int> { return receiveRowStream.asObserver()}
     
@@ -51,12 +45,6 @@ class ProfileViewInfo {
                 } else if index == 1 {
                     self?.sendHeightStream.onNext(collectionHeight)
                 }
-        })
-            .disposed(by: disposeBag)
-        
-        receiveScreenNameStream.subscribe(onNext: {[weak self] in
-            print("ScreenName更新：\($0)")
-            self?.sendScreenNameStream.onNext($0)
         })
             .disposed(by: disposeBag)
         

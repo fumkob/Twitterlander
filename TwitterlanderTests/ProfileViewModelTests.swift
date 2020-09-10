@@ -11,15 +11,15 @@ import RxSwift
 @testable import Twitterlander
 
 class ProfileModelTests: XCTestCase {
-    let profileViewModel = ProfileViewModel(client: ProfileClientMockFactory.emptyProfileClient())
-    func testProfileUrlGenerator() {
-        let screenName = "test"
-        let baseUrl = "https://api.twitter.com/1.1/users/show.json"
-        let name = "screen_name=" + screenName
-        let urlString = baseUrl + "?" + name
-        let profileUrlGenerator = profileViewModel.profileUrlGenerator(screenName: screenName)
-        XCTAssertEqual(profileUrlGenerator, urlString)
-    }
+    let profileViewModel = ProfileViewModel(client: ProfileClientMockFactory.emptyProfileClient(), screenName: "")
+//    func testProfileUrlGenerator() {
+//        let screenName = "test"
+//        let baseUrl = "https://api.twitter.com/1.1/users/show.json"
+//        let name = "screen_name=" + screenName
+//        let urlString = baseUrl + "?" + name
+//        let profileUrlGenerator = profileViewModel.profileUrlGenerator(screenName: screenName)
+//        XCTAssertEqual(profileUrlGenerator, urlString)
+//    }
     
     func testHeightLimit600() {
         let height:CGFloat = 599
@@ -40,7 +40,7 @@ class ProfileModelTests: XCTestCase {
 
 class ProfileClientMockFactory {
     class ProfileClientMock: ProfileClient {
-        override func getProfile(url: String, token: [String : String]) -> Single<ProfileData> {
+        override func getProfile(with client: OAuthClient, screenName: String) -> Single<ProfileData> {
             return .create(subscribe : {observer in
                 observer(.success(ProfileData(name: "",
                                               screenName: "",
