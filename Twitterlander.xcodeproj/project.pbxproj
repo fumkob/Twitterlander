@@ -63,6 +63,8 @@
 		A58AE82A24C172B60071DE43 /* TimeCalculation.swift in Sources */ = {isa = PBXBuildFile; fileRef = A58AE82924C172B60071DE43 /* TimeCalculation.swift */; };
 		A58AE82C24C174B60071DE43 /* TimeCalculationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A58AE82B24C174B60071DE43 /* TimeCalculationTests.swift */; };
 		A58AE84E24C725390071DE43 /* HomeViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A58AE84D24C725390071DE43 /* HomeViewModelTests.swift */; };
+		A5B31C97250F46A900A6B73E /* ProfileClientTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5B31C96250F46A900A6B73E /* ProfileClientTests.swift */; };
+		A5B31C99250F4A1D00A6B73E /* ProfileData.json in Resources */ = {isa = PBXBuildFile; fileRef = A5B31C98250F4A1D00A6B73E /* ProfileData.json */; };
 		A5C761AE2506343A005DB48B /* SearchClientTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5C761AD2506343A005DB48B /* SearchClientTests.swift */; };
 		A5CB4A4724FE0E2A00D553A5 /* ProfileContents.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A5CB4A4624FE0E2A00D553A5 /* ProfileContents.storyboard */; };
 		A5D3179324D45ED000F3B6A8 /* ProfileTweetViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5D3179224D45ED000F3B6A8 /* ProfileTweetViewModel.swift */; };
@@ -161,6 +163,8 @@
 		A58AE82924C172B60071DE43 /* TimeCalculation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeCalculation.swift; sourceTree = "<group>"; };
 		A58AE82B24C174B60071DE43 /* TimeCalculationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeCalculationTests.swift; sourceTree = "<group>"; };
 		A58AE84D24C725390071DE43 /* HomeViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModelTests.swift; sourceTree = "<group>"; };
+		A5B31C96250F46A900A6B73E /* ProfileClientTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileClientTests.swift; sourceTree = "<group>"; };
+		A5B31C98250F4A1D00A6B73E /* ProfileData.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = ProfileData.json; sourceTree = "<group>"; };
 		A5C761AD2506343A005DB48B /* SearchClientTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchClientTests.swift; sourceTree = "<group>"; };
 		A5CB4A4624FE0E2A00D553A5 /* ProfileContents.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = ProfileContents.storyboard; sourceTree = "<group>"; };
 		A5D3179224D45ED000F3B6A8 /* ProfileTweetViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileTweetViewModel.swift; sourceTree = "<group>"; };
@@ -325,6 +329,7 @@
 		A566AF2024B7177600D2E7F6 /* TwitterlanderTests */ = {
 			isa = PBXGroup;
 			children = (
+				A5B31C98250F4A1D00A6B73E /* ProfileData.json */,
 				A54A20BC2508C5950039113F /* sample3.json */,
 				A54A20BB2508C5950039113F /* searchResult.json */,
 				A566AF2324B7177600D2E7F6 /* Info.plist */,
@@ -338,6 +343,7 @@
 				A5E6D28524D7EC3F00DC1E79 /* ProfileMediaViewModelTests.swift */,
 				A52EE39E24EBC75F003DF65A /* TimelineClientTests.swift */,
 				A5C761AD2506343A005DB48B /* SearchClientTests.swift */,
+				A5B31C96250F46A900A6B73E /* ProfileClientTests.swift */,
 			);
 			path = TwitterlanderTests;
 			sourceTree = "<group>";
@@ -529,6 +535,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A54A20BD2508C5950039113F /* searchResult.json in Resources */,
+				A5B31C99250F4A1D00A6B73E /* ProfileData.json in Resources */,
 				A54A20BE2508C5950039113F /* sample3.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -731,6 +738,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A52EE39F24EBC75F003DF65A /* TimelineClientTests.swift in Sources */,
+				A5B31C97250F46A900A6B73E /* ProfileClientTests.swift in Sources */,
 				A553E1B124D3B72800FD08EA /* ProfileViewTest.swift in Sources */,
 				A58AE82C24C174B60071DE43 /* TimeCalculationTests.swift in Sources */,
 				A5E5641724CF136C000DEF6A /* TweetDetailViewModelTests.swift in Sources */,

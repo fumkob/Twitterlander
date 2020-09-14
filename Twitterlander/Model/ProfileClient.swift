@@ -11,6 +11,12 @@ import SwiftyJSON
 import RxSwift
 
 public class ProfileClient {
+    
+    public enum Error: Swift.Error {
+        case decodeError
+        case oauthClientError(APIError)
+    }
+    
     private var oauthswift: OAuthSwift?
     
     public func getProfile(with client: OAuthClient, screenName: String) -> Single<ProfileData> {
@@ -19,7 +25,15 @@ public class ProfileClient {
             fatalError("invalid url")
         }
         
-        return client.getAPIRequestResult(of: url).map { ProfileData(profileData: $0) }
+        return client.getAPIRequestResult(of: url)
+            .catchError { error in
+                guard let error = error as? APIError else { throw APIError.unknown }
+                throw Error.oauthClientError(error)
+        }
+            .map { json in
+                guard let profileData = ProfileData(profileData: json) else { throw Error.decodeError }
+                return profileData
+        }
     }
     
     public func profileUrlGenerator(screenName: String) -> String {

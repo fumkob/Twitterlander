@@ -1,0 +1,152 @@
+{
+    "profile_background_image_url": "http://abs.twimg.com/images/themes/theme1/bg.png",
+    "default_profile": false,
+    "geo_enabled": true,
+    "profile_sidebar_fill_color": "FFFFFF",
+    "profile_background_tile": false,
+    "time_zone": null,
+    "utc_offset": null,
+    "following": true,
+    "protected": false,
+    "profile_image_url": "http://pbs.twimg.com/profile_images/1283276562331168768/KUanlgF3_normal.jpg",
+    "profile_image_url_https": "https://pbs.twimg.com/profile_images/1283276562331168768/KUanlgF3_normal.jpg",
+    "profile_background_image_url_https": "https://abs.twimg.com/images/themes/theme1/bg.png",
+    "profile_text_color": "333333",
+    "entities": {
+        "description": {
+            "urls": [
+                {
+                    "display_url": "bit.ly/2H1OLlO",
+                    "indices": [
+                        62,
+                        85
+                    ],
+                    "url": "https://t.co/yOIfqfscFr",
+                    "expanded_url": "https://bit.ly/2H1OLlO"
+                }
+            ]
+        },
+        "url": {
+            "urls": [
+                {
+                    "display_url": "nissan.co.jp",
+                    "indices": [
+                        0,
+                        23
+                    ],
+                    "url": "https://t.co/Y44nOHkkZx",
+                    "expanded_url": "http://www.nissan.co.jp/"
+                }
+            ]
+        }
+    },
+    "profile_link_color": "99002B",
+    "lang": null,
+    "name": "日産自動車株式会社",
+    "profile_banner_url": "https://pbs.twimg.com/profile_banners/82827599/1597890499",
+    "contributors_enabled": false,
+    "followers_count": 278321,
+    "id": 82827599,
+    "is_translation_enabled": false,
+    "translator_type": "none",
+    "description": "日産自動車公式アカウント。企業や商品に関する情報について発信してまいります。なお現在お乗りのお車や販売店等でお困りのことは https://t.co/yOIfqfscFr にお願いいたします。",
+    "friends_count": 15041,
+    "notifications": false,
+    "verified": true,
+    "screen_name": "NissanJP",
+    "profile_sidebar_border_color": "FFFFFF",
+    "default_profile_image": false,
+    "profile_use_background_image": true,
+    "follow_request_sent": false,
+    "url": "https://t.co/Y44nOHkkZx",
+    "location": "Yokohama",
+    "profile_background_color": "131516",
+    "listed_count": 3151,
+    "favourites_count": 2506,
+    "status": {
+        "entities": {
+            "user_mentions": [
+                {
+                    "id": 106316853,
+                    "id_str": "106316853",
+                    "name": "情報誌・横浜ウォーカー",
+                    "indices": [
+                        3,
+                        19
+                    ],
+                    "screen_name": "_YokohamaWalker"
+                }
+            ],
+            "symbols": [],
+            "hashtags": [],
+            "urls": []
+        },
+        "retweeted_status": {
+            "entities": {
+                "user_mentions": [],
+                "symbols": [],
+                "hashtags": [],
+                "urls": [
+                    {
+                        "display_url": "twitter.com/i/web/status/1…",
+                        "url": "https://t.co/RMRN9Bb6aL",
+                        "indices": [
+                            117,
+                            140
+                        ],
+                        "expanded_url": "https://twitter.com/i/web/status/1289070953075322881"
+                    }
+                ]
+            },
+            "place": null,
+            "in_reply_to_screen_name": null,
+            "possibly_sensitive": false,
+            "retweeted": false,
+            "coordinates": null,
+            "in_reply_to_status_id": null,
+            "in_reply_to_status_id_str": null,
+            "id": 1289070953075323000,
+            "contributors": null,
+            "retweet_count": 31,
+            "source": "<a href=\"http://twitter.com/download/iphone\" rel=\"nofollow\">Twitter for iPhone</a>",
+            "text": "「ニッサン パビリオン」が新高島に8/1土〜期間限定オープン。 日産による “未来のモビリティ社会”を体感できるスポットです。大型シアターではバーチャルライドや大坂なおみ選手とのバーチャルテニスが。自動運転技術をテーマにしたショー… https://t.co/RMRN9Bb6aL",
+            "in_reply_to_user_id": null,
+            "geo": null,
+            "truncated": true,
+            "in_reply_to_user_id_str": null,
+            "created_at": "Fri Jul 31 05:30:39 +0000 2020",
+            "favorited": false,
+            "is_quote_status": false,
+            "lang": "ja",
+            "id_str": "1289070953075322881",
+            "favorite_count": 76
+        },
+        "source": "<a href=\"https://mobile.twitter.com\" rel=\"nofollow\">Twitter Web App</a>",
+        "in_reply_to_user_id": null,
+        "retweeted": false,
+        "in_reply_to_user_id_str": null,
+        "favorite_count": 0,
+        "id_str": "1305340605912891392",
+        "retweet_count": 31,
+        "text": "RT @_YokohamaWalker: 「ニッサン パビリオン」が新高島に8/1土〜期間限定オープン。 日産による “未来のモビリティ社会”を体感できるスポットです。大型シアターではバーチャルライドや大坂なおみ選手とのバーチャルテニスが。自動運転技術をテーマにしたショートムー…",
+        "lang": "ja",
+        "id": 1305340605912891400,
+        "in_reply_to_screen_name": null,
+        "place": null,
+        "coordinates": null,
+        "favorited": false,
+        "created_at": "Mon Sep 14 03:00:27 +0000 2020",
+        "truncated": false,
+        "is_quote_status": false,
+        "geo": null,
+        "contributors": null,
+        "in_reply_to_status_id": null,
+        "in_reply_to_status_id_str": null
+    },
+    "created_at": "Fri Oct 16 07:56:17 +0000 2009",
+    "id_str": "82827599",
+    "statuses_count": 28911,
+    "profile_location": null,
+    "is_translator": false,
+    "has_extended_profile": false
+}

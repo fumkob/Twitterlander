@@ -25,49 +25,27 @@ public struct ProfileData {
 }
 
 public extension ProfileData {
-    init(profileData: JSON) {
-        guard let name = profileData["name"].string else {
-            fatalError("name is missing")
-        }
-        guard let screenName = profileData["screen_name"].string else {
-            fatalError("screen_name is missing")
-        }
-        guard let profileImageUrl = profileData["profile_image_url_https"].string else {
-            fatalError("profile_image_url_https is missing")
-        }
+    init?(profileData: JSON) {
+        guard let name = profileData["name"].string else { return nil }
+        guard let screenName = profileData["screen_name"].string else { return nil }
+        guard let profileImageUrl = profileData["profile_image_url_https"].string else { return nil }
         if let profileBannerUrl = profileData["profile_banner_url"].string {
             self.profileBannerUrl = profileBannerUrl
         }
-        guard let description = profileData["description"].string else {
-            fatalError("description is missing")
-        }
-        guard let createdAt = profileData["created_at"].string else {
-            fatalError("created_at is missing")
-        }
-        guard let createdAtFormatted = Date(fromISO8601: createdAt) else {
-            fatalError("createdAt can not be formatted")
-        }
-        guard  let location = profileData["location"].string else {
-            fatalError("locaion is missing")
-        }
+        guard let description = profileData["description"].string else { return nil }
+        guard let createdAt = profileData["created_at"].string else { return nil }
+        guard let createdAtFormatted = Date(fromISO8601: createdAt) else { return nil }
+        guard  let location = profileData["location"].string else { return nil }
         if !profileData["entities"]["url"]["urls"].isEmpty {
             let urls = profileData["entities"]["url"]["urls"]
             let link = urls.compactMap { $0.1["display_url"].string }
 
             self.link = link
         }
-        guard let friendsCount = profileData["friends_count"].int else {
-            fatalError("friend_count is missing")
-        }
-        guard let followersCount = profileData["followers_count"].int else {
-            fatalError("followers_count is missing")
-        }
-        guard let following = profileData["following"].bool else {
-            fatalError("following is missing")
-        }
-        guard let verified = profileData["verified"].bool else {
-            fatalError("verified is missing")
-        }
+        guard let friendsCount = profileData["friends_count"].int else { return nil }
+        guard let followersCount = profileData["followers_count"].int else { return nil }
+        guard let following = profileData["following"].bool else { return nil }
+        guard let verified = profileData["verified"].bool else { return nil }
         
         self.name = name
         self.screenName = screenName
