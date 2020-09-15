@@ -16,9 +16,7 @@ public class ProfileClient {
         case decodeError
         case oauthClientError(APIError)
     }
-    
-    private var oauthswift: OAuthSwift?
-    
+        
     public func getProfile(with client: OAuthClient, screenName: String) -> Single<ProfileData> {
         let urlString = profileUrlGenerator(screenName: screenName)
         guard let url = URL(string: urlString) else {

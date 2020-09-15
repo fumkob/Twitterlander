@@ -11,13 +11,12 @@ import SwiftyJSON
 import RxSwift
 
 public class SearchClient {
+    
     public enum Error: Swift.Error {
         case decodeError
         case oauthClientError(APIError)
     }
-    
-    private var oauthswift: OAuthSwift?
-    
+        
     public func getSearchResult(with client: OAuthClient, screenName: String) -> Single<[SearchResult]> {
         let urlString = searchUrlGenerator(screenName: screenName)
         guard let url = URL(string: urlString) else {

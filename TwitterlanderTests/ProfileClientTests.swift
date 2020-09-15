@@ -73,14 +73,11 @@ class ProfileClientTests: QuickSpec {
             }
             
             it("throws wrongsetting error when url is not correct") {
-                let oauthClientMock = OAuthClientMockFactory.wrongSettingErrorOAuthClient()
+                let oauthClientMock = OAuthClientMockFactory.errorOAuthClient(type: .wrongSetting)
                 profileClient.getProfile(with: oauthClientMock, screenName: "")
                     .subscribe(onError: {error in
-                        guard let error = error as? ProfileClient.Error else {
-                            fail("unexepected error"); return
-                        }
-                        switch error {
-                        case .oauthClientError(.wrongSetting): break
+                        switch self.errorConversion(error: error) {
+                        case .wrongSetting: break
                         default: fail("unexepected error")
                         }
                         exp.fulfill()
@@ -93,13 +90,12 @@ class ProfileClientTests: QuickSpec {
             }
             
             it("throws server error when the twitter server is down") {
-                let oauthClientMock = OAuthClientMockFactory.serverErrorOAuthClient()
+                let oauthClientMock = OAuthClientMockFactory.errorOAuthClient(type: .serverError)
                 
                 profileClient.getProfile(with: oauthClientMock, screenName: "")
                     .subscribe(onError: {error in
-                        guard let error = error as? ProfileClient.Error else {fail("unexepected error"); return}
-                        switch error {
-                        case .oauthClientError(.serverError): break
+                        switch self.errorConversion(error: error) {
+                        case .serverError: break
                         default: fail("unexepected error")
                         }
                         exp.fulfill()
@@ -112,13 +108,12 @@ class ProfileClientTests: QuickSpec {
             }
             
             it("throws unauthorized error when access denied or token expired") {
-                let oauthClientMock = OAuthClientMockFactory.unauthorizedErrorOAuthClient()
+                let oauthClientMock = OAuthClientMockFactory.errorOAuthClient(type: .unauthorized)
                 
                 profileClient.getProfile(with: oauthClientMock, screenName: "")
                     .subscribe(onError: {error in
-                        guard let error = error as? ProfileClient.Error else {fail("unexepected error"); return}
-                        switch error {
-                        case .oauthClientError(.unauthorized): break
+                        switch self.errorConversion(error: error) {
+                        case .unauthorized: break
                         default: fail("unexepected error")
                         }
                         exp.fulfill()
@@ -134,6 +129,17 @@ class ProfileClientTests: QuickSpec {
     
     func correctUrl(screenName: String) -> String {
         return "https://api.twitter.com/1.1/users/show.json?screen_name=" + screenName
+    }
+    
+    func errorConversion(error: Error) -> APIError {
+        guard let error = error as? ProfileClient.Error else {fail("unexepected error");return APIError.unknown}
+        switch error {
+        case .oauthClientError(.serverError): return APIError.serverError
+        case .oauthClientError(.wrongSetting): return APIError.wrongSetting
+        case .oauthClientError(.decodeError): return APIError.decodeError
+        case .oauthClientError(.unauthorized): return APIError.unauthorized
+        default : return APIError.unknown
+        }
     }
 }
 

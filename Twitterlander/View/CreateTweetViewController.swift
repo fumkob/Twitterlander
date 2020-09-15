@@ -35,7 +35,7 @@ class CreateTweetViewController: UIViewController {
             .withLatestFrom(tweetText.rx.text.orEmpty)
             .subscribe(onNext: {[weak self] in
                 if !$0.isEmpty {
-                    self?.createTweetViewModel.postTweet(tweet: $0)
+                    self?.createTweetViewModel.requestCreatingTweet(tweet: $0)
                 }
             })
         .disposed(by: disposeBag)
