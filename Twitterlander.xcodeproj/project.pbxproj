@@ -142,6 +142,7 @@
 		A566AF2824B7177600D2E7F6 /* TwitterlanderUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TwitterlanderUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		A566AF2C24B7177600D2E7F6 /* TwitterlanderUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TwitterlanderUITests.swift; sourceTree = "<group>"; };
 		A566AF2E24B7177600D2E7F6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		A57680852513285500445C38 /* ErrorHandlingTest.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = ErrorHandlingTest.playground; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		A579FE5024DA7239005EDAE8 /* AlertExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertExtension.swift; sourceTree = "<group>"; };
 		A585431724D2C4F700588D4A /* ProfileContentsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileContentsViewController.swift; sourceTree = "<group>"; };
 		A585431B24D2C64A00588D4A /* ProfileTweetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileTweetViewController.swift; sourceTree = "<group>"; };
@@ -222,6 +223,7 @@
 			children = (
 				A55289BD24BD9D0E00B0671A /* JsonTest.playground */,
 				A54A20B6250888130039113F /* SwiftyJSONTest.playground */,
+				A57680852513285500445C38 /* ErrorHandlingTest.playground */,
 			);
 			path = TestGround;
 			sourceTree = "<group>";
