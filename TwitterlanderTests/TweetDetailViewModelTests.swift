@@ -11,7 +11,7 @@ import RxSwift
 @testable import Twitterlander
 
 class TweetDetailViewModelTests: XCTestCase {
-    let tweetDetailViewModel = TweetDetailViewModel(client: SearchClientMockFactory.SearchClientMock())
+//    let tweetDetailViewModel = TweetDetailViewModel(client: SearchClientMockFactory.SearchClientMock())
 //    func testSearchUrlGenerator() {
 //        let baseUrl = "https://api.twitter.com/1.1/search/tweets.json"
 //        let screenName = "__APITest__"
@@ -43,6 +43,7 @@ class TweetDetailViewModelTests: XCTestCase {
  */
 }
 
+/*
 class SearchClientMockFactory {
     class SearchClientMock: SearchClient {
         override func getSearchResult(with client: OAuthClient, screenName: String) -> Single<[SearchResult]> {
@@ -56,3 +57,4 @@ class SearchClientMockFactory {
         return SearchClientMock()
     }
 }
+*/
