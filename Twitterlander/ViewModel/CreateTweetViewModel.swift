@@ -18,7 +18,6 @@ public enum CreateTweetStatus {
 open class CreateTweetViewModel {
     private let createTweetClient: CreateTweetClient
     private var disposeBag = DisposeBag()
-    private let userDefaults = UserDefaults.standard
     
     //ツイート完了通知
     private let createTweetStatusEvent = PublishSubject<CreateTweetStatus>()
@@ -30,16 +29,13 @@ open class CreateTweetViewModel {
     
     open func requestCreatingTweet(tweet: String) {
         createTweetStatusEvent.onNext(.onProgress)
-//        let backgroundScheduler = ConcurrentDispatchQueueScheduler(qos: .background)
-        
         disposeBag = DisposeBag()
         //投稿
         createTweetClient.createTweet(with: OAuthClient(), tweet: tweet)
             .subscribe(onSuccess: { [unowned self] _ in
                 self.createTweetStatusEvent.onNext(.success)
-                }, onError: { error in
-                    print(error)
-                    self.createTweetStatusEvent.onNext(.failure)
+            }, onError: { _ in
+                self.createTweetStatusEvent.onNext(.failure)
             })
             .disposed(by: disposeBag)
         

@@ -76,8 +76,13 @@ open class OAuthClient {
                         fatalError("response could not be converted to JSON")
                     }
                     observer(.success(JSON(data)))
+                case .failure(.serverError): observer(.error(APIError.serverError))
+                case .failure(.accessDenied): observer(.error(APIError.unauthorized))
+                case .failure(.tokenExpired): observer(.error(APIError.unauthorized))
+                case .failure(.configurationError): observer(.error(APIError.wrongSetting))
+                case let .failure(.requestError(error, request)): observer(.error(APIError.requestError(error, request)))
                 case .failure:
-                    observer(.error(APIError.postCreateTweetError))
+                    observer(.error(APIError.unknown))
                 }
             }
 
