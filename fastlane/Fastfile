@@ -1,8 +1,38 @@
 default_platform(:ios)
 
 platform :ios do
-  desc "Description of what the lane does"
+  desc "Test"
   lane :tests do
       scan(devices: "iPhone 11", scheme: "Twitterlander")
+  end
+  
+  desc "Release on deploygate"
+  lane :deploy_app do
+    
+    #match setup
+    create_keychain(name: ENV["MATCH_KEYCHAIN_NAME"],
+                    password: ENV["MATCH_KEYCHAIN_PASSWORD"],
+                    unlock: true,
+                    timeout: 3600)
+
+    match(
+      type: "enterprise",
+      keychain_name: ENV["MATCH_KEYCHAIN_NAME"],
+      keychain_password: ENV["MATCH_KEYCHAIN_PASSWORD"],
+      readonly: true
+    )
+    
+    #bulid
+    gym(
+      scheme: "Twitterlander",
+      export_method: "enterprise"
+      )
+    
+    #release on deploygate
+    deploygate(
+      api_token: ENV['DEPLOYGATE_API_KEY'],
+      user: ENV['DEPLOYGATE_USER'],
+      message: "Fastlane build #{lane_context[SharedValues::BUILD_NUMBER]}",
+    )
   end
 end

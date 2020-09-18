@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="collection view cell content view" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Profile Media View Controller-->
+        <scene sceneID="tm7-0j-u2R">
+            <objects>
+                <viewController storyboardIdentifier="profileMedia" id="B8P-mn-GCS" customClass="ProfileMediaViewController" customModule="Twitterlander" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="JY6-Oh-7B4">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="xOR-gL-fDO">
+                                <rect key="frame" x="0.0" y="44" width="414" height="852"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="1" minimumInteritemSpacing="1" id="bmz-az-CaJ">
+                                    <size key="itemSize" width="150" height="150"/>
+                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                </collectionViewFlowLayout>
+                                <cells>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" restorationIdentifier="cell" reuseIdentifier="collectionCell" id="YC9-qy-bhp" customClass="MediaViewCell" customModule="Twitterlander" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="0.0" width="150" height="150"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="ukJ-cC-cuU">
+                                            <rect key="frame" x="0.0" y="0.0" width="150" height="150"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="W6Q-gg-98X">
+                                                    <rect key="frame" x="0.0" y="0.0" width="150" height="150"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" relation="lessThanOrEqual" priority="750" constant="100" id="kl8-qT-eid"/>
+                                                        <constraint firstAttribute="width" relation="lessThanOrEqual" priority="750" constant="100" id="wZg-fo-XkO"/>
+                                                    </constraints>
+                                                </imageView>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="W6Q-gg-98X" firstAttribute="top" secondItem="ukJ-cC-cuU" secondAttribute="top" id="A5c-DL-71h"/>
+                                                <constraint firstAttribute="trailing" secondItem="W6Q-gg-98X" secondAttribute="trailing" id="CG9-WV-zRQ"/>
+                                                <constraint firstAttribute="bottom" secondItem="W6Q-gg-98X" secondAttribute="bottom" id="IyY-sN-LAx"/>
+                                                <constraint firstItem="W6Q-gg-98X" firstAttribute="leading" secondItem="ukJ-cC-cuU" secondAttribute="leading" id="NDS-kx-R5h"/>
+                                            </constraints>
+                                        </collectionViewCellContentView>
+                                        <connections>
+                                            <outlet property="mediaImageView" destination="W6Q-gg-98X" id="QUb-dj-9UD"/>
+                                        </connections>
+                                    </collectionViewCell>
+                                </cells>
+                            </collectionView>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="kDd-9i-zgd" firstAttribute="trailing" secondItem="xOR-gL-fDO" secondAttribute="trailing" id="8KT-5C-MYY"/>
+                            <constraint firstItem="xOR-gL-fDO" firstAttribute="top" secondItem="kDd-9i-zgd" secondAttribute="top" id="QS0-Sg-bZR"/>
+                            <constraint firstAttribute="bottom" secondItem="xOR-gL-fDO" secondAttribute="bottom" id="gRK-Qh-xUL"/>
+                            <constraint firstItem="xOR-gL-fDO" firstAttribute="leading" secondItem="kDd-9i-zgd" secondAttribute="leading" id="kDh-fT-6Rl"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="kDd-9i-zgd"/>
+                    </view>
+                    <connections>
+                        <outlet property="mediaCollectionView" destination="xOR-gL-fDO" id="9Hm-Ea-IFC"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="9c7-dB-5NH" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="64" y="59"/>
+        </scene>
+    </scenes>
+</document>

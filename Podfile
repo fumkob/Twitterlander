@@ -11,6 +11,7 @@ target 'Twitterlander' do
   pod 'RxCocoa', '~> 5'
   pod 'Kingfisher', '~> 5.0'
   pod 'OAuthSwift', '~> 2.0.0'
+  pod 'Tabman', '~> 2.9'
   
   # Pods for Twitterlander
 
@@ -19,6 +20,9 @@ target 'Twitterlander' do
     # Pods for testing
     pod 'RxBlocking', '~> 5'
     pod 'RxTest', '~> 5'
+    pod 'Quick', '~> 3.0'
+    pod 'Nimble', '~> 8.1'
+    
   end
 
   target 'TwitterlanderUITests' do

@@ -1,18 +1,25 @@
 language: objective-c
 os: osx
-osx_image: xcode11.5
-
-cache: cocoapods
-
+osx_image: xcode11.6
+cache:
+  - cocoapods
+  - bundler
+ 
+addons:
+- ssh_known_hosts: github.com
+ 
 before_install:
-- pod update
-- bundle install --path vendor/bundle
+  - gem install bundler --version '2.1.4'
+  - bundle install --path vendor/bundle
+  - openssl aes-256-cbc -K $encrypted_189e52c2c347_key -iv $encrypted_189e52c2c347_iv -in deploy_key.enc -out ./deploy_key -d
+  - chmod 600 ./deploy_key
+  - ssh-add ./deploy_key
 
 script:
-- fastlane tests
-# - xcodebuild test -project HomeworkDay4.xcodeproj -scheme HomeworkDay4 -destination
-#  'platform=iOS Simulator,OS=13.5,name=iPhone 11'
+  - bundle exec pod install --repo-update
+  - bundle exec fastlane tests
+  - if [ "$TRAVIS_BRANCH" = "release" ]; then bundle exec fastlane deploy_app; fi
 
-env:
-  global:
-    secure: RGdBSzVqUoo/+YB66F8hufY4ilx6wWcSqtduXN5+aqLiuEv9IcR2E8+Kgp0bSV0MpPktAQZ4oiGRwYT7O4bzvKZgyzNYKMZgPdjyNAKMxOW88O6XDz1IcpQM/QOxAIHeTJzUbZzW1JDFGeffyULg20euZNNd98sM2uwQUyTWrqjjIHP2C+8i5ROTu1qDwCCjUBHXogZVHFnK5NVGLWJi0z1fmsy17R06lDAI3uRKL4UeCqzvYdz5KVZpgbFtdJYtr229FRq+e0/ePK0PkkCOT288JDVzYT6Ts3mFTAzTrm+0gElPFooTB6zj9tDWKKVJqwb0JOJZD2RxuhSJvNRFWLGUrk0aERzXo3khTiKrXK6dwjnBr2yVCLYlfbcWxCIO85aPI0BnpkVI+6xHVcoj+rntFgZ3Pm3gKD0EzgVTIwd3qx6YDJrtYA65qvGHvou9nZhsTIqXhnBEGh1I3CzFCsRX8p16Xmt/arNppxcpZjLZ0IsheKfNnAuJc8Lz6PbrFeeK/Luaqd+Oto6hNjqMcqmTahT7lrI38XtC8c49HwxJCex9MW3fJczQX/BSinhvB5jl5wWJVItHwpO61ICczTAWIkJKNMYHWxc2n5dcZmISUg+auH9z284uLrG2FThCSrxGY7xRFQM56a55NESff35hqVcbfDfAReKm+bgI8Eo=
+notifications:
+  slack:
+    secure: $SLACK_TOKEN

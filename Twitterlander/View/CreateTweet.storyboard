@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097.2" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Create Tweet View Controller-->
+        <scene sceneID="9sy-OU-9QO">
+            <objects>
+                <viewController storyboardIdentifier="createTweet" id="8oT-XT-ccR" customClass="CreateTweetViewController" customModule="Twitterlander" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="Qyh-0D-EEK">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hIO-30-tEY">
+                                <rect key="frame" x="20" y="54" width="77" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="77" id="cR2-EF-TBD"/>
+                                    <constraint firstAttribute="height" constant="30" id="rXZ-M3-lv6"/>
+                                </constraints>
+                                <state key="normal" title="キャンセル"/>
+                                <connections>
+                                    <segue destination="Kq0-SU-ZT1" kind="unwind" unwindAction="cancelTappedWithSegue:" id="eeU-MS-VGR"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MNa-kl-tB2" customClass="CustomButton" customModule="Twitterlander" customModuleProvider="target">
+                                <rect key="frame" x="284" y="54" width="110" height="30"/>
+                                <color key="backgroundColor" red="0.4750428646" green="0.66135824099999996" blue="0.91863662000000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="q1D-1K-dOv"/>
+                                    <constraint firstAttribute="width" constant="110" id="t3S-CC-Tdc"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                <state key="normal" title="ツイートする">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                        <real key="value" value="15"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                            </button>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" placeholder="いまどうしてる？" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="BPt-p0-sH6">
+                                <rect key="frame" x="20" y="94" width="374" height="768"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="1B3-8d-ypi" firstAttribute="trailing" secondItem="MNa-kl-tB2" secondAttribute="trailing" constant="20" id="2Qg-C4-oNl"/>
+                            <constraint firstItem="BPt-p0-sH6" firstAttribute="top" secondItem="hIO-30-tEY" secondAttribute="bottom" constant="10" id="9U5-af-UXi"/>
+                            <constraint firstItem="hIO-30-tEY" firstAttribute="leading" secondItem="1B3-8d-ypi" secondAttribute="leading" constant="20" id="9mw-Od-R07"/>
+                            <constraint firstItem="1B3-8d-ypi" firstAttribute="trailing" secondItem="BPt-p0-sH6" secondAttribute="trailing" constant="20" id="Tyt-M0-0vS"/>
+                            <constraint firstItem="1B3-8d-ypi" firstAttribute="bottom" secondItem="BPt-p0-sH6" secondAttribute="bottom" id="fVH-kz-x38"/>
+                            <constraint firstItem="hIO-30-tEY" firstAttribute="top" secondItem="1B3-8d-ypi" secondAttribute="top" constant="10" id="lIS-8h-5b8"/>
+                            <constraint firstItem="MNa-kl-tB2" firstAttribute="top" secondItem="1B3-8d-ypi" secondAttribute="top" constant="10" id="p9u-FQ-orn"/>
+                            <constraint firstItem="BPt-p0-sH6" firstAttribute="leading" secondItem="1B3-8d-ypi" secondAttribute="leading" constant="20" id="xmG-EX-MSc"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="1B3-8d-ypi"/>
+                    </view>
+                    <connections>
+                        <outlet property="tweetButton" destination="MNa-kl-tB2" id="DsQ-hZ-qLE"/>
+                        <outlet property="tweetText" destination="BPt-p0-sH6" id="Ewb-Cd-a3Q"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="542-oH-lIM" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <exit id="Kq0-SU-ZT1" userLabel="Exit" sceneMemberID="exit"/>
+            </objects>
+            <point key="canvasLocation" x="87" y="84"/>
+        </scene>
+    </scenes>
+</document>
